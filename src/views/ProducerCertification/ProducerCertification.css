@@ -1,0 +1,64 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.certificationBox {
+  text-align: center;
+  padding: 30px;
+  border-radius: 10px;
+}
+.certificationBox.success {
+  border: 3px solid #5cb85c;
+  background-color: #f8fff8;
+}
+.certificationBox.warning {
+  border: 3px solid #f0ad4e;
+  background-color: #fffaf5;
+}
+
+.certificationTitle {
+  font-size: 22px; /* h2 */
+  font-weight: 600;
+  margin: 0;
+}
+.certificationTitle.success {
+  color: #5cb85c;
+}
+.certificationTitle.warning {
+  color: #f0ad4e;
+}
+
+.certificationScore {
+  font-size: 72px;
+  font-weight: bold;
+  color: #005a3a;
+  margin: 10px 0;
+}
+
+.certificationText {
+  font-size: 18px;
+  color: #333;
+}
+
+.certificationTrophy {
+  font-size: 120px;
+  margin: 20px 0;
+}
+.trophyLabel {
+  font-size: 24px;
+  font-weight: bold;
+  color: #005a3a;
+  display: block;
+}

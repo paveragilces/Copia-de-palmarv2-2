@@ -1,0 +1,77 @@
+.stepperContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f7f9fa;
+  border-radius: 12px;
+}
+
+.stepItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.stepCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border: 2px solid #e0e0e0;
+  background-color: #fff;
+  color: #aaa;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.stepCircle.active {
+  border-color: #005a3a;
+  background-color: #005a3a;
+  color: white;
+}
+
+.stepCircle.completed {
+  border-color: #5cb85c;
+  background-color: #5cb85c;
+  color: white;
+}
+
+.stepLabel {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
+  text-align: center;
+}
+
+.stepLabel.active {
+  color: #005a3a;
+  font-weight: bold;
+}
+
+.stepLine {
+  position: absolute;
+  top: 16px; /* Mitad de 32px */
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background-color: #e0e0e0;
+  z-index: 1;
+}
+
+.stepLine.completed {
+  background-color: #5cb85c;
+}
+
+/* El último .stepLine no debe dibujarse */
+.stepItem:last-child .stepLine {
+  display: none;
+}

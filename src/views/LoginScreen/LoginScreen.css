@@ -1,0 +1,210 @@
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #f7f9fa;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAnElEQVR42u3RMREAAAgEMcC/gQkvMwZIvaZrSg8/gI8gIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi8N0SN/kQP+pGj/AAAAAASUVORK5CYII=);
+}
+
+.loginBox {
+  background-color: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  width: 450px;
+  max-width: 95%;
+  overflow: hidden;
+}
+
+.loginLogo {
+  font-size: 42px;
+  font-weight: bold;
+  color: #005a3a;
+  line-height: 1.2;
+}
+
+.loginLogoSub {
+  font-size: 42px;
+  font-weight: bold;
+  color: #a6e34b;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.loginTitle {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+  min-height: 29px;
+}
+
+.loginSubtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
+  min-height: 20px;
+}
+
+/* --- ESTILOS DE ANIMACIÓN --- */
+
+.loginAnimatedContainer {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loginView.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.loginView.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.loginView:first-child {
+  position: relative;
+}
+
+/* --- LAYOUTS DE VISTAS --- */
+.loginView.main-view {
+  flex-direction: row;
+}
+
+.loginView.internal-view {
+  flex-direction: column;
+  gap: 10px;
+}
+
+.internalButtonRow {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+
+.loginBackButton {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  transition: background-color 0.2s;
+  width: fit-content;
+}
+
+.loginBackButton:hover {
+  background-color: #f0f0f0;
+}
+
+/* --- NUEVO ESTILO DE BOTÓN "CHOICE" --- */
+.loginChoiceButton {
+  /* Estilo base */
+  border: 1.5px solid;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  
+  /* Layout interno (icono arriba, texto abajo) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  /* Tamaño y espacio */
+  flex: 1;
+  padding: 20px 15px;
+  gap: 10px;
+  
+  font-size: 16px;
+  font-weight: 600;
+  
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.loginChoiceButton .buttonText {
+  line-height: 1.2;
+}
+
+/* --- NUEVAS VARIANTES DE COLOR --- */
+
+/* 1. Estilo "Outline" (Fondo Blanco) */
+.loginChoiceButton.outline-primary {
+  background-color: #ffffff;
+  border-color: #005a3a;
+  color: #005a3a; /* El icono y el texto heredan este color */
+}
+.loginChoiceButton.outline-primary:hover {
+  background-color: #f7fffb; /* Verde muy pálido */
+  border-color: #004a2f; /* Verde más oscuro */
+  color: #004a2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 90, 58, 0.1);
+}
+
+/* 2. Estilo "Solid" (Fondo Verde - Negativo) */
+.loginChoiceButton.solid-primary {
+  background-color: #005a3a;
+  border-color: #005a3a;
+  color: #ffffff; /* El icono y el texto heredan este color */
+}
+.loginChoiceButton.solid-primary:hover {
+  background-color: #004a2f; /* Verde más oscuro */
+  border-color: #004a2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 90, 58, 0.2);
+}
+
+
+/* --- TAMAÑO PARA BOTONES INTERNOS --- */
+.internalButtonRow .loginChoiceButton {
+  padding: 15px 10px;
+  font-size: 14px;
+  gap: 8px;
+}
+
+
+/* --- Estilos antiguos (ya no se usan en este componente) --- */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.button-secondary {
+  background-color: #f0f0f0;
+  color: #444;
+}
+.buttonOutline {
+  width: 100%;
+  justify-content: center;
+}

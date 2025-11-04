@@ -1,0 +1,134 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #005a3a;
+  margin-bottom: 10px;
+}
+
+.cardNumericValue {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.listItemContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.listItemContent p {
+  margin: 2px 0;
+}
+
+.listItemActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.listItemTitle {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.countdownTimer {
+  font-size: 18px;
+  font-weight: bold;
+  color: #005a3a;
+}
+.countdownDate {
+  color: #555;
+}
+
+/* Resultados */
+.resultItem {
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #fdfdfd;
+}
+.resultHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.resultItem p {
+  margin: 4px 0;
+}
+.diagnosis {
+  font-weight: bold;
+  color: #005a3a;
+}
+.actions {
+  font-weight: bold;
+  color: #d9534f;
+}
+.recommendation {
+  font-style: italic;
+}
+
+.tag {
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.tag-completed { 
+  background-color: #5cb85c; 
+  color: #fff; 
+}

@@ -1,0 +1,32 @@
+/* Estilos para components/layout/Header.jsx */
+
+.app-header {
+  background-color: rgba(0, 90, 58, 0.85); /* Verde con transparencia */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #a6e34b; /* Acento más vibrante */
+}
+
+.app-nav {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+/* NOTA: Los estilos para NavButton (navButton, navButtonHover, notificationBadge)
+  los crearemos en su propio archivo: components/ui/NavButton.css
+*/

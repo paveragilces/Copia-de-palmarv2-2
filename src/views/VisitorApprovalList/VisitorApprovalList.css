@@ -1,0 +1,134 @@
+/* src/views/VisitorApprovalList/VisitorApprovalList.css */
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* Estilos de Botones */
+.button {
+  background-color: #005a3a;
+  color: white;
+  padding: 8px 12px;
+  border: 1.5px solid; /* Grosor de borde consistente */
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 2px 4px; /* Ajuste de margen */
+}
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button-success {
+  background-color: #5cb85c;
+  color: white;
+  border-color: #5cb85c;
+}
+.button-success:hover {
+  background-color: #4a994a;
+  border-color: #4a994a;
+}
+
+.button-danger {
+  background-color: #d9534f;
+  color: white;
+  border-color: #d9534f;
+}
+.button-danger:hover {
+  background-color: #c9302c;
+  border-color: #c9302c;
+}
+
+.button-outline-danger {
+  background-color: #ffffff;
+  color: #d9534f;
+  border: 1.5px solid #d9534f;
+  box-shadow: none;
+}
+.button-outline-danger:hover {
+  background-color: #fff8f8;
+  border-color: #d43f3a;
+  color: #d43f3a;
+  transform: translateY(-2px);
+}
+
+/* --- ESTILO DE ETIQUETA DE RIESGO MEJORADO (PÍLDORA) --- */
+.riskTag {
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 99px; /* Píldora */
+  font-size: 12px;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  min-width: 60px;
+}
+.riskTag.risk-low { 
+  background-color: #5cb85c; 
+  color: #fff;
+}
+.riskTag.risk-middle { 
+  background-color: #f0ad4e; 
+  color: #fff;
+}
+.riskTag.risk-high { 
+  background-color: #d9534f; 
+  color: #fff;
+}
+
+/* --- ESTILOS DE TABLA --- */
+.tableContainer {
+  width: 100%;
+  overflow-x: auto; /* Para responsividad */
+}
+
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.dataTable th,
+.dataTable td {
+  border: 1px solid #e0e0e0;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.dataTable th {
+  background-color: #f9f9f9;
+  font-weight: 600;
+  color: #333;
+}
+
+.dataTable tbody tr:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+.dataTable tbody tr:hover {
+  background-color: #f0f5f0;
+}
+
+.dataTable td:last-child {
+  white-space: nowrap; /* Evita que los botones se rompan */
+  width: 1%;
+}

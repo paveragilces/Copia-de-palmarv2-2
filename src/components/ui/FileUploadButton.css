@@ -1,0 +1,40 @@
+.fileUploadButton {
+  /* Propiedades base de 'button' */
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+
+  /* Propiedades específicas de 'fileUploadButton' (dashed) */
+  background-color: transparent;
+  color: #005a3a;
+  border: 2px dashed #005a3a;
+  padding: 10px 15px; /* Ajuste del monolito */
+}
+
+.fileUploadButton.success {
+  /* Propiedades de 'fileUploadButtonSuccess' */
+  color: #5cb85c;
+  border: 2px solid #5cb85c;
+  background-color: #f8fff8;
+}
+
+/* Hovers (basados en .btn-primary:hover y .btn-secondary:hover) */
+.fileUploadButton.dashed:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 90, 58, 0.05);
+}
+
+.fileUploadButton.success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(92, 184, 92, 0.2);
+  background-color: #f0fff0;
+}

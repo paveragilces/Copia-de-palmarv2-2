@@ -1,0 +1,176 @@
+/* src/views/ProducerVisitorLog/ProducerVisitorLog.css */
+.producerVisitorLog {
+  /* No usa el .container por defecto, maneja su propio padding */
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.producerVisitorLog .h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 3px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* --- FILTROS MEJORADOS --- */
+.filtersContainer {
+  background-color: #FAFAFA; /* ¡COLOR CAMBIADO! */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Columnas responsivas */
+  gap: 15px 20px; /* Gap horizontal y vertical */
+  align-items: flex-end; 
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterGroup label {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* Estilo unificado para inputs y selects de filtro */
+.filterInput,
+.filterSelect {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Altura fija para alinear con el botón de reload */
+  height: 40px; 
+}
+.filterInput::placeholder {
+  color: #aaa;
+}
+
+.filterInput:focus,
+.filterSelect:focus {
+  outline: none;
+  border-color: #005a3a;
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.2);
+}
+
+.filterSelect {
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.2-16%208.4-3.7%205.2-4.5%2011.8-2.5%2017.5l139%20139.2c2.8%202.8%206.7%204.3%2010.6%204.3s7.8-1.5%2010.6-4.3l139-139.2c2-5.7%201.1-12.3-2.6-17.5z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+  padding-right: 35px; /* Espacio para la flecha */
+  cursor: pointer;
+}
+
+/* --- BOTÓN DE LIMPIAR FILTROS (RELOAD) --- */
+.filterGroup.clearButtonContainer {
+  justify-content: flex-end; /* Alinea el botón abajo */
+}
+.clearFiltersButton.button.icon {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #777;
+  padding: 0; /* Quitamos padding para controlar con width/height */
+  width: 40px;  /* ¡CAMBIO! Menos ancho */
+  height: 40px; /* ¡CAMBIO! Alineado con inputs */
+  border-radius: 8px;
+}
+.clearFiltersButton.button.icon:hover {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+  color: #333;
+}
+
+/* --- ESTILOS DE ESTADO (PÍLDORAS) --- */
+.visitStatusTag {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.visitStatusTag.pending {
+  background-color: #fff8e1;
+  color: #ffb300;
+}
+.visitStatusTag.approved {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+.visitStatusTag.denied {
+  background-color: #ffebee;
+  color: #f44336;
+}
+.visitStatusTag.checked_in {
+  background-color: #e3f2fd;
+  color: #2196f3;
+}
+.visitStatusTag.checked_out {
+  background-color: #f5f5f5; /* Más sutil */
+  color: #666;
+}
+
+/* --- BOTÓN DE PDF (ICONO) --- */
+.producerVisitorLog .button.icon {
+  background: none;
+  border: none;
+  color: #555; /* ¡CAMBIO! Menos oscuro */
+  padding: 5px;
+  box-shadow: none; /* Sin sombra */
+  border-radius: 50%; /* Circular */
+  width: 34px; /* Tamaño fijo */
+  height: 34px;
+}
+.producerVisitorLog .button.icon:hover:not(:disabled) {
+  color: #005a3a; /* ¡CAMBIO! Verde oscuro en hover */
+  background-color: #f5f5f5; /* ¡CAMBIO! Fondo gris claro */
+  transform: scale(1.1); /* Efecto sutil */
+}
+.producerVisitorLog .button.icon:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: none;
+  transform: none;
+}
+
+/* Botón Outline (usado por "Limpiar Filtros" en .jsx, pero .icon lo sobreescribe) */
+.button.outline {
+  background-color: #fff;
+  border: 1.5px solid #005a3a;
+  color: #005a3a;
+  box-shadow: none;
+}
+.button.outline:hover {
+  background-color: #f0f8ed;
+  border-color: #004a2f;
+}
+
+/* Botón Icon (base) */
+.button.icon {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 5px;
+}
+.button.icon:hover:not(:disabled) {
+  background-color: #f0f0f0;
+  transform: translateY(0); /* Anula el hover general */
+}
+.button.icon:disabled {
+  background: none;
+  color: #ccc;
+}

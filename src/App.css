@@ -1,38 +1,53 @@
-.App {
-  text-align: center;
+/*
+ * Estilos Globales y de Layout Principal (App.js)
+ */
+
+/* * Estilos base de la aplicación.
+ * Los aplicamos a #root (el div principal de React) 
+ * y/o al body para que cubran toda la pantalla.
+ */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #f7f9fa;
+  
+  /* Fondo de ruido sutil para textura */
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAnElEQVR42u3RMREAAAgEMcC/gQkvMwZIvaZrSg8/gI8gIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi8N0SN/kQP+pGj/AAAAAASUVORK5CYII=);
+  
+  min-height: 100vh;
+  color: #333;
+  line-height: 1.6;
+  box-sizing: border-box; /* Mejor manejo de padding y borders */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* * Asegura que todos los elementos hereden el box-sizing 
+ */
+*, *:before, *:after {
+  box-sizing: inherit;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* * Contenido principal cuando el Sidebar está visible.
+ * Se aplica al <main>
+ */
+.mainContentWithSidebar {
+  padding: 30px;
+  /* Deja espacio para el sidebar fijo de 240px */
+  margin-left: 240px; 
+  /* Deja espacio para el header sticky */
+  padding-top: 90px; 
+  /* Asegura que el ancho máximo tome en cuenta el sidebar */
+  max-width: calc(100% - 240px);
 }
 
-.App-header {
-  background-color: #282c34;
+/* * Contenido principal para pantallas de ancho completo 
+ * (Login, Visitor forms). Se aplica al <main>
+ */
+.mainContentFull {
+  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  align-items: center;
 }

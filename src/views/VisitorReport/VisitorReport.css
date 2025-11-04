@@ -1,0 +1,122 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.reportHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background-color: #ffffff;
+}
+
+.dateInputContainer {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.dateInput {
+  padding-right: 40px;
+  margin-bottom: 0; /* Override */
+}
+
+.dateInputIcon {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  pointer-events: none;
+  color: #555;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.listItemContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.visitorDetails {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.visitorName {
+  font-weight: bold;
+  font-size: 18px;
+}
+.visitorCompany {
+  font-weight: normal;
+  color: #555;
+}
+
+.listItemActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.tag {
+  padding: 5px 12px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.tag-pending { background-color: #777; color: #fff; }
+.tag-approved { background-color: #5cb85c; color: #fff; }
+.tag-danger { background-color: #d9534f; color: #fff; } /* Para 'rejected' */
+.tag-info { background-color: #5bc0de; color: #fff; } /* Para 'completed' */

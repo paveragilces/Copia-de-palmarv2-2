@@ -1,0 +1,88 @@
+/* Estilos para components/layout/Sidebar.jsx */
+
+.sidebar {
+  width: 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7); /* Vidrio claro */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); /* Safari */
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Asegura que el footer se vaya abajo */
+  box-sizing: border-box;
+}
+
+.sidebarLogo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #005a3a;
+  padding: 10px 0 20px 0;
+  text-align: center;
+}
+
+.sidebarLogoSub {
+  color: #a6e34b;
+  display: block;
+}
+
+.sidebarNav {
+  flex: 1; /* Ocupa el espacio disponible */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.sidebarButton {
+  background-color: transparent;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px 15px;
+  border-radius: 8px;
+  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  width: 100%;
+}
+
+.sidebarButton.selected {
+  background-color: #005a3a;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 90, 58, 0.2);
+}
+
+.sidebarButton.hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebarFooter {
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footerLogoContainer {
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footerLogo {
+  height: 20px; /* Estilo que estaba inline */
+}
+
+.footerLogoText {
+  font-size: 12px; /* Estilo que estaba inline */
+  color: #aaa;
+}
