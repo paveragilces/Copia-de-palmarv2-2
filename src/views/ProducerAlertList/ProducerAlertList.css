@@ -1,0 +1,170 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+/* --- NUEVO HEADER --- */
+.alertListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.alertListHeader .h1 {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* --- Pestañas (copiado de AlertTriageView.css) --- */
+.tabContainer {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabButton {
+  padding: 10px 15px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: #777;
+  transition: all 0.2s;
+}
+
+.tabButton.active {
+  color: #005a3a;
+  border-bottom: 3px solid #005a3a;
+}
+
+/* --- Lista (copiado de TechnicianSchedule.css) --- */
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  border-left: 5px solid #5bc0de; /* Default blue */
+}
+
+.listItemContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.alertInfo {
+  flex-basis: 400px;
+  flex-grow: 1;
+}
+
+.alertInfo p {
+  margin: 2px 0;
+}
+
+.alertStatus {
+  flex-basis: 250px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statusLabel {
+  font-size: 14px;
+  color: #555;
+}
+.statusValue {
+  font-size: 16px;
+  font-weight: 600;
+  color: #005a3a;
+}
+
+.listItemActions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.alertFarmName {
+  font-weight: bold;
+  font-size: 18px;
+}
+.alertDate {
+  font-size: 14px;
+  color: #555;
+  margin-left: 8px;
+}
+.alertSymptoms {
+  color: #333;
+  font-style: italic;
+}
+
+.alertPriority {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.alertPriority.priority-low {
+  background-color: #e6f7ff;
+  color: #5bc0de;
+}
+.alertPriority.priority-medium {
+  background-color: #fffaf5;
+  color: #f0ad4e;
+}
+ .alertPriority.priority-high {
+  background-color: #fff8f8;
+  color: #d9534f;
+}
+
+
+/* Botones */
+.button {
+  background-color: #005a3a;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 5px rgba(0, 74, 47, 0.1);
+}
+
+.button-secondary {
+  background-color: #f0f0f0;
+  color: #444;
+  padding: 10px 18px;
+  box-shadow: none;
+}

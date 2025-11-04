@@ -1,9 +1,43 @@
 // Contiene los datos simulados de la aplicación (Sección 2 del monolito)
 
 export const MOCK_PRODUCERS = [
-  { id: 'p1', name: 'Finca Santa Rita', owner: 'Juan Valdez' },
-  { id: 'p2', name: 'Hacienda El Sol', owner: 'Maria Gomez' },
+  { 
+    id: 'p1', 
+    owner: 'Juan Valdez', 
+    fincas: [
+      { 
+        id: 'f1', 
+        name: 'Finca Santa Rita', 
+        hectares: 50, 
+        lotes: ['Lote 01', 'Lote 02', 'Lote 03 (Producción)', 'Lote 04'] 
+      },
+      { 
+        id: 'f2', 
+        name: 'Hacienda El Sol', 
+        hectares: 120, 
+        lotes: ['Bloque A', 'Bloque B', 'Sector Nuevo'] 
+      }
+    ]
+  },
+  { 
+    id: 'p2', 
+    owner: 'Maria Gomez',
+    fincas: [
+      { 
+        id: 'f3', 
+        name: 'El Gran Cacao', 
+        hectares: 75, 
+        lotes: ['Lote 1A', 'Lote 1B', 'Lote 2C'] 
+      }
+    ]
+  },
 ];
+
+// ¡NUEVO! Una lista plana de todas las fincas para formularios de visita
+export const MOCK_FINCAS_FLAT = MOCK_PRODUCERS.flatMap(p => 
+  p.fincas.map(f => ({...f, producerId: p.id, owner: p.owner}))
+);
+
 
 export const MOCK_TECHNICIANS_PROFILES = [
   { id: 't1', name: 'Carlos Ruiz', zone: 'Norte' },
@@ -12,9 +46,9 @@ export const MOCK_TECHNICIANS_PROFILES = [
 ];
 
 export const MOCK_ALERTS = [
-  { id: 'a1', producerId: 'p1', farmName: 'Finca Santa Rita', date: '2024-05-01', parts: {'Hoja': true}, symptoms: ['Amarillamiento de hojas bajas'], photos: {}, location: { lat: -2.14, lon: -79.9 }, status: 'pending', techId: null, visitDate: null, priority: null, managerComment: null, possibleDisease: null, inspectionData: null },
-  { id: 'a2', producerId: 'p2', farmName: 'Hacienda El Sol', date: '2024-05-03', parts: {'Fruto': true}, symptoms: ['Frutos pequeños o deformados'], photos: {}, location: { lat: -2.2, lon: -79.8 }, status: 'pending', techId: null, visitDate: null, priority: null, managerComment: null, possibleDisease: null, inspectionData: null },
-  { id: 'a3', producerId: 'p1', farmName: 'Finca Santa Rita', date: '2024-04-20', parts: {'Pseudotallo': true}, symptoms: ['Exudado viscoso al presionar corte'], photos: {}, location: { lat: -2.145, lon: -79.905 }, status: 'completed', techId: 't1', visitDate: '2024-04-25', priority: 'Alta', managerComment: 'Revisar urgente Moko', possibleDisease: ['Moko'], 
+  { id: 'a1', producerId: 'p1', fincaId: 'f1', lote: 'Lote 02', farmName: 'Finca Santa Rita', date: '2024-05-01', parts: {'Hoja': true}, symptoms: ['Amarillamiento de hojas bajas'], photos: {}, location: { lat: -2.14, lon: -79.9 }, status: 'pending', techId: null, visitDate: null, priority: null, managerComment: null, possibleDisease: null, inspectionData: null },
+  { id: 'a2', producerId: 'p1', fincaId: 'f2', lote: 'Bloque A', farmName: 'Hacienda El Sol', date: '2024-05-03', parts: {'Fruto': true}, symptoms: ['Frutos pequeños o deformados'], photos: {}, location: { lat: -2.2, lon: -79.8 }, status: 'pending', techId: null, visitDate: null, priority: null, managerComment: null, possibleDisease: null, inspectionData: null },
+  { id: 'a3', producerId: 'p1', fincaId: 'f1', lote: 'Lote 03 (Producción)', farmName: 'Finca Santa Rita', date: '2024-04-20', parts: {'Pseudotallo': true}, symptoms: ['Exudado viscoso al presionar corte'], photos: {}, location: { lat: -2.145, lon: -79.905 }, status: 'completed', techId: 't1', visitDate: '2024-04-25', priority: 'Alta', managerComment: 'Revisar urgente Moko', possibleDisease: ['Moko'], 
     inspectionData: {
       audit: { 
         status: 'Completado',
@@ -37,23 +71,23 @@ export const MOCK_ALERTS = [
       }
     }
   },
-  { id: 'a4', producerId: 'p1', farmName: 'Finca Santa Rita', date: '2024-05-05', parts: {'Hoja': true}, symptoms: ['Marchitez o colapso de hojas'], photos: {}, location: { lat: -2.142, lon: -79.901 }, status: 'assigned', techId: 't1', visitDate: '2024-11-01', priority: 'Alta', managerComment: 'Posible Erwinia, revisar urgente.', possibleDisease: ['Erwinia'], inspectionData: null },
+  { id: 'a4', producerId: 'p1', fincaId: 'f1', lote: 'Lote 01', farmName: 'Finca Santa Rita', date: '2024-05-05', parts: {'Hoja': true}, symptoms: ['Marchitez o colapso de hojas'], photos: {}, location: { lat: -2.142, lon: -79.901 }, status: 'assigned', techId: 't1', visitDate: '2024-11-01', priority: 'Alta', managerComment: 'Posible Erwinia, revisar urgente.', possibleDisease: ['Erwinia'], inspectionData: null },
 ];
 
 export const MOCK_VISITS = [
-  { id: 'v1', producerId: 'p1', visitorName: 'Carlos R.', company: 'AgroInsumos S.A.', reason: 'Entrega de fertilizantes', type: 'Entrega agroinsumos', date: '2024-11-01', status: 'pending', qrIn: null, qrOut: null, checkIn: null, checkOut: null, signature: null },
-  { id: 'v2', producerId: 'p1', visitorName: 'Ana Gomez', company: 'Fumigax', reason: 'Fumigación programada', type: 'Fumigación', date: '2024-11-02', status: 'approved', qrIn: 'QR-IN-V2-XYZ', qrOut: 'QR-OUT-V4-456', checkIn: null, checkOut: null, signature: null },
-  { id: 'v3', producerId: 'p2', visitorName: 'Luis Peña', company: 'Cartonera Nacional', reason: 'Entrega de cartón', type: 'Entrega cartón', date: '2024-11-01', status: 'pending', qrIn: null, qrOut: null, checkIn: null, checkOut: null, signature: null },
+  { id: 'v1', producerId: 'p1', fincaId: 'f1', visitorName: 'Carlos R.', company: 'AgroInsumos S.A.', reason: 'Entrega de fertilizantes', type: 'Entrega agroinsumos', date: '2024-11-01', status: 'pending', qrIn: null, qrOut: null, checkIn: null, checkOut: null, signature: null },
+  { id: 'v2', producerId: 'p1', fincaId: 'f1', visitorName: 'Ana Gomez', company: 'Fumigax', reason: 'Fumigación programada', type: 'Fumigación', date: '2024-11-02', status: 'approved', qrIn: 'QR-IN-V2-XYZ', qrOut: 'QR-OUT-V4-456', checkIn: null, checkOut: null, signature: null },
+  { id: 'v3', producerId: 'p2', fincaId: 'f3', visitorName: 'Luis Peña', company: 'Cartonera Nacional', reason: 'Entrega de cartón', type: 'Entrega cartón', date: '2024-11-01', status: 'pending', qrIn: null, qrOut: null, checkIn: null, checkOut: null, signature: null },
 ];
 
 export const MOCK_TASKS = []; 
 
 export const MOCK_NOTIFICATIONS = [
-  { id: 'n1', producerId: 'p1', date: '2024-04-22', text: 'El Gerente ha asignado la Alerta #a3. El técnico Carlos Ruiz visitará su finca el 2024-04-25.', read: true, link: 'producerDashboard' },
+  { id: 'n1', producerId: 'p1', date: '2024-04-22', text: 'El Gerente ha asignado la Alerta #a3 (Finca Santa Rita). El técnico Carlos Ruiz visitará su finca el 2024-04-25.', read: true, link: 'producerDashboard' },
   { id: 'n2', producerId: 'p1', date: '2024-04-25', text: 'La inspección de la Alerta #a3 ha sido completada. Revise los resultados y tareas.', read: true, link: 'producerDashboard' },
-  { id: 'n3', producerId: 'p1', date: '2024-05-05', text: 'Su Alerta #a4 ha sido recibida y está siendo revisada por el gerente.', read: true, link: 'producerDashboard' },
-  { id: 'n4', producerId: 'p1', date: '2024-05-06', text: 'El Gerente ha asignado la Alerta #a4. El técnico Carlos Ruiz visitará su finca el 2024-11-01.', read: false, link: 'producerDashboard' },
-  { id: 'n5', producerId: 'p1', date: '2024-10-30', text: 'La solicitud de visita de Carlos R. (AgroInsumos S.A.) está pendiente de aprobación.', read: false, link: 'visitorApproval' },
+  { id: 'n3', producerId: 'p1', date: '2024-05-05', text: 'Su Alerta #a4 (Finca Santa Rita) ha sido recibida y está siendo revisada por el gerente.', read: true, link: 'producerDashboard' },
+  { id: 'n4', producerId: 'p1', date: '2024-05-06', text: 'El Gerente ha asignado la Alerta #a4 (Finca Santa Rita). El técnico Carlos Ruiz visitará su finca el 2024-11-01.', read: false, link: 'producerDashboard' },
+  { id: 'n5', producerId: 'p1', date: '2024-10-30', text: 'La solicitud de visita de Carlos R. (AgroInsumos S.A.) para Finca Santa Rita está pendiente de aprobación.', read: false, link: 'visitorApproval' },
 ];
 
 export const MOCK_INSPECTION_MODULES = [

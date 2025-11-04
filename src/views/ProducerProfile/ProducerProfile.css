@@ -1,0 +1,83 @@
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.h1 {
+  font-size: 28px;
+  color: #005a3a;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #a6e34b;
+  padding-bottom: 10px;
+}
+
+.h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.h3 {
+  font-size: 18px;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+}
+
+.fincaCard {
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.fincaHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.fincaHeader .h2 {
+  margin: 0;
+  color: #005a3a;
+}
+
+.fincaHectares {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.loteList {
+  list-style-type: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.loteItem {
+  background-color: #f7f9fa;
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}

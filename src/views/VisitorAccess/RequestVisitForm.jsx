@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import Input from '../../components/ui/Input';
 import Button from '../../components/ui/Button';
 import { VISIT_PURPOSES, VALUE_CHAIN_CATEGORIES } from '../../data/constants';
-import { MOCK_PRODUCERS } from '../../data/mockData'; 
+// ¡CAMBIO IMPORTANTE! Usamos la lista plana de fincas
+import { MOCK_FINCAS_FLAT } from '../../data/mockData'; 
 import styles from './VisitorAccess.css'; // Usa el CSS compartido
 
 const initialFormState = {
-  fincaId: 'p1',
+  fincaId: MOCK_FINCAS_FLAT[0]?.id || 'f1', // Asegurar que el default sea válido
   name: '',
   // --- CAMBIO CLAVE ---
   // Forzamos el ID para que coincida con el filtro en App.js
@@ -46,8 +47,10 @@ function RequestVisitForm({ onNewRequest }) {
       alert('Por favor, complete todos los campos para solicitar la visita.');
       return;
     }
-    onNewRequest(formData); // Envía los datos a App.js
-    setMessage('✅ Visita solicitada. Una vez aprobada, su pase QR estará disponible en la pestaña "Mis Pases QR".');
+    // onNewRequest ahora es una promesa
+    onNewRequest(formData).then(() => {
+      setMessage('✅ Visita solicitada. Una vez aprobada, su pase QR estará disponible en la pestaña "Mis Pases QR".');
+    });
   };
 
   if (message) {
@@ -66,7 +69,7 @@ function RequestVisitForm({ onNewRequest }) {
 
   return (
     <form onSubmit={handleSubmit} className="form">
-      {/* --- CAMPO FINCA --- */}
+      {/* --- CAMPO FINCA (Ahora usa MOCK_FINCAS_FLAT) --- */}
       <div className="inputGroup">
         <label htmlFor="fincaId">Finca a Visitar</label>
         <select
@@ -77,8 +80,8 @@ function RequestVisitForm({ onNewRequest }) {
           className="inputField"
           required
         >
-          {MOCK_PRODUCERS.map(finca => (
-            <option key={finca.id} value={finca.id}>{finca.name}</option>
+          {MOCK_FINCAS_FLAT.map(finca => (
+            <option key={finca.id} value={finca.id}>{finca.name} (Prod: {finca.owner})</option>
           ))}
         </select>
       </div>

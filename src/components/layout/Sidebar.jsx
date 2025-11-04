@@ -51,10 +51,13 @@ const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
             <>
               <SidebarButton page="producerDashboard" iconPath={ICONS.dashboard} label="Dashboard" />
               <SidebarButton page="reportAlert" iconPath={ICONS.report} label="Reportar Alerta" />
+              {/* --- ¡NUEVO LINK! --- */}
+              <SidebarButton page="producerAlertList" iconPath={ICONS.alert} label="Registro de Alertas" />
               <SidebarButton page="visitorApproval" iconPath={ICONS.visit} label="Aprobar Visitas" />
               <SidebarButton page="producerVisitorLog" iconPath={ICONS.audit} label="Registro de Visitas" />
               <SidebarButton page="producerTasks" iconPath={ICONS.tasks} label="Mis Tareas" />
               <SidebarButton page="producerCertification" iconPath={ICONS.certification} label="Certificación" />
+              <SidebarButton page="producerProfile" iconPath={ICONS.technician} label="Mis Fincas" />
             </>
           )}
 

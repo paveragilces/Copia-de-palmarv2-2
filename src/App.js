@@ -13,10 +13,10 @@ import {
   MOCK_VISITS,
   MOCK_TASKS,
   MOCK_NOTIFICATIONS,
-  MOCK_INSPECTION_MODULES
+  MOCK_INSPECTION_MODULES,
+  MOCK_FINCAS_FLAT 
 } from './data/mockData';
 import { MOCK_TASK_TEMPLATES } from './data/constants';
-// ¡Importar la función de cálculo de riesgo!
 import { calculateRisk } from './utils/riskCalculator';
 
 // --- SECCIÓN 3: IMPORTAR COMPONENTES REUTILIZABLES ---
@@ -39,15 +39,18 @@ import ProducerTasks from './views/ProducerTasks/ProducerTasks';
 import ProducerCertification from './views/ProducerCertification/ProducerCertification';
 import NotificationCenter from './views/NotificationCenter/NotificationCenter';
 import TechnicianInspectionCenter from './views/TechnicianInspectionCenter/TechnicianInspectionCenter';
+import ProducerProfile from './views/ProducerProfile/ProducerProfile'; 
+// --- ¡¡ESTA LÍNEA ES CRUCIAL!! ---
+// Asegúrate de que es así (sin llaves)
+import ProducerAlertList from './views/ProducerAlertList/ProducerAlertList'; 
 
-// --- NUEVAS IMPORTACIONES DE FLUJO DE VISITAS ---
+// --- IMPORTACIONES DE FLUJO DE VISITAS ---
 import VisitorAccessPage from './views/VisitorAccess/VisitorAccessPage';
 import VisitorCheckIn from './views/VisitorCheckIn/VisitorCheckIn';
 import ProducerVisitorLog from './views/ProducerVisitorLog/ProducerVisitorLog';
 
-// --- NUEVAS IMPORTACIONES PARA GENERACIÓN DE PDF ---
+// --- IMPORTACIONES PARA GENERACIÓN DE PDF ---
 import { jsPDF } from 'jspdf';
-import html2canvas from 'html2canvas'; // Aunque no lo usaremos directamente para las imágenes DataURL, es útil tenerlo para otros casos.
 
 function App() {
   // --- Estado de Navegación ---
@@ -63,7 +66,7 @@ function App() {
 
   // --- Estado de Datos (Mocks) ---
   const [alerts, setAlerts] = useState(MOCK_ALERTS);
-  const [visits, setVisits] = useState(MOCK_VISITS); // ¡La fuente de verdad!
+  const [visits, setVisits] = useState(MOCK_VISITS);
   const [technicians, setTechnicians] = useState(
     MOCK_TECHNICIANS_PROFILES.map(t => ({
       ...t,
@@ -72,6 +75,7 @@ function App() {
   );
   const [tasks, setTasks] = useState(MOCK_TASKS);
   const [producers, setProducers] = useState(MOCK_PRODUCERS);
+  const [fincas, setFincas] = useState(MOCK_FINCAS_FLAT);
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
 
 
@@ -86,7 +90,6 @@ function App() {
         module.questions.forEach(q => {
           if (ratings[q.id] && ratings[q.id] < 3) {
             const template = MOCK_TASK_TEMPLATES[q.id];
-            // Prevenir duplicados si el efecto se corre de nuevo
             if (template && !tasks.find(t => t.id === `t-${alert.id}-${q.id}`)) {
               initialTasks.push({
                 id: `t-${alert.id}-${q.id}`,
@@ -135,7 +138,6 @@ function App() {
     setTrainingModalTask(task);
   };
 
-  // --- LÓGICA DE LOGIN ACTUALIZADA ---
   const handleLogin = (role, page = null) => {
     setUserRole(role);
     if (role === 'manager') {
@@ -150,9 +152,9 @@ function App() {
     } else if (role === 'public') {
       setCurrentUser(null);
       if (page === 'visitorForm') {
-        setCurrentPage('visitorAccessPage'); // Página de Pestañas de Visitante
+        setCurrentPage('visitorAccessPage'); 
       } else if (page === 'visitorCheckIn') {
-        setCurrentPage('visitorCheckIn'); // Página de Portero
+        setCurrentPage('visitorCheckIn'); 
       }
     } else {
       setCurrentUser(null);
@@ -182,7 +184,7 @@ function App() {
       const alertWithId = { ...newAlert, id: `a${Date.now()}` };
       setAlerts(prev => [alertWithId, ...prev]);
       
-      createNotification(newAlert.producerId, `Tu Alerta #${alertWithId.id} ha sido recibida y está siendo revisada por el gerente.`, 'producerDashboard');
+      createNotification(newAlert.producerId, `Tu Alerta #${alertWithId.id} (${newAlert.farmName}) ha sido recibida.`, 'producerDashboard');
       
       setLoading(false);
       setModal({ show: true, message: 'Alerta enviada con éxito. El gerente será notificado.', type: 'success' });
@@ -190,61 +192,67 @@ function App() {
     }, 500);
   };
 
-  // --- LÓGICA DE VISITAS TOTALMENTE ACTUALIZADA ---
-
   const handleSubmitVisitRequest = (requestData) => {
-    // requestData ahora incluye { fincaId, name, id, company, purpose, valueChain, entryTime, exitTime }
-    return new Promise((resolve) => { // Devuelve una promesa para que el formulario sepa
+    return new Promise((resolve) => { 
       setLoading(true);
       setTimeout(() => {
+        const fincaData = fincas.find(f => f.id === requestData.fincaId);
+        const producerId = fincaData ? fincaData.producerId : null;
+
         const newVisit = {
           id: `V-${requestData.fincaId}-${Date.now()}-${requestData.id.slice(-3)}`,
-          producerId: requestData.fincaId,
+          producerId: producerId, 
+          fincaId: requestData.fincaId, 
           name: requestData.name,
           idNumber: requestData.id,
           company: requestData.company,
           purpose: requestData.purpose,
           valueChain: requestData.valueChain,
-          entryTime: requestData.entryTime, // Hora solicitada
-          exitTime: requestData.exitTime,   // Hora solicitada
+          entryTime: requestData.entryTime, 
+          exitTime: requestData.exitTime,   
           status: 'PENDING',
           qrData: null,
           risk: null,
-          checkIn: null, // Hora real
-          checkOut: null, // Hora real
+          checkIn: null, 
+          checkOut: null, 
           signature: null,
-          visitorPhoto: null, // Campo nuevo
-          vehiclePhoto: null, // Campo nuevo
+          visitorPhoto: null, 
+          vehiclePhoto: null, 
         };
         setVisits(prev => [newVisit, ...prev]);
 
-        createNotification(newVisit.producerId, `Nueva solicitud de visita de ${newVisit.name}.`, 'visitorApproval');
-        
+        if (producerId) {
+           createNotification(producerId, `Nueva solicitud de visita de ${newVisit.name} para ${fincaData.name}.`, 'visitorApproval');
+        }
+       
         setLoading(false);
-        resolve(true); // Resuelve la promesa
+        resolve(true); 
       }, 500);
     });
   };
 
-  const handleApproveVisit = (visitId, potentialRisk) => { // Ahora recibe el riesgo
+  const handleApproveVisit = (visitId, potentialRisk) => { 
     setLoading(true);
     setTimeout(() => {
       let producerId = '';
+      let visitName = '';
       setVisits(prev => prev.map(v => {
         if (v.id === visitId) {
           producerId = v.producerId;
+          visitName = v.name;
           return {
             ...v,
             status: 'APPROVED',
-            risk: potentialRisk, // Asigna el riesgo calculado
-            qrData: `${v.id}|${v.idNumber}|${potentialRisk.toUpperCase()}`, // QR Data: IDVisita|IDCedula|Riesgo
+            risk: potentialRisk, 
+            qrData: `${v.id}|${v.idNumber}|${potentialRisk.toUpperCase()}`, 
           };
         }
         return v;
       }));
       
-      const visitName = visits.find(v => v.id === visitId)?.name || 'Visita';
-      createNotification(producerId, `Has aprobado la visita de ${visitName}.`, 'visitorApproval');
+      if (producerId) {
+        createNotification(producerId, `Has aprobado la visita de ${visitName}.`, 'visitorApproval');
+      }
       showLoadingAndModal('Visita aprobada. Se generó el código QR.', 'success');
     }, 500);
   };
@@ -258,7 +266,6 @@ function App() {
     }, 500);
   };
 
-  // --- LÓGICA DE ESCANEO DE QR CORREGIDA ---
   const handleScanQr = (qrData) => {
     return new Promise((resolve, reject) => {
       setLoading(true);
@@ -277,10 +284,8 @@ function App() {
         let updatedVisit;
 
         if (originalVisit.status === 'APPROVED') {
-          // Check in
           updatedVisit = { ...originalVisit, status: 'CHECKED_IN', checkIn: now, scannedTime: now };
         } else if (originalVisit.status === 'CHECKED_IN') {
-          // Check out
           updatedVisit = { ...originalVisit, status: 'CHECKED_OUT', checkOut: now, scannedTime: now };
         } else if (originalVisit.status === 'CHECKED_OUT') {
           setLoading(false);
@@ -292,48 +297,46 @@ function App() {
           return;
         }
         
-        // Actualiza el estado
         setVisits(prev => prev.map((v, index) => index === visitIndex ? updatedVisit : v));
         setLoading(false);
-        resolve(updatedVisit); // Devuelve la *nueva* visita
+        resolve(updatedVisit); 
 
       }, 500);
     });
   };
   
   const handleCaptureEvidence = (visitId, type, data) => {
-    // 'type' puede ser 'visitorPhoto', 'vehiclePhoto', o 'signature'
     setVisits(prev => prev.map(v => 
       v.id === visitId ? { ...v, [type]: data } : v
     ));
     console.log(`Evidencia [${type}] guardada para ${visitId}`);
   };
 
-  // --- ¡NUEVA FUNCIÓN DE GENERACIÓN DE PDF! ---
   const handleGeneratePDF = async (visit) => {
     setLoading(true);
     try {
       const doc = new jsPDF();
-      let yPos = 20; // Posición Y inicial para el texto
+      let yPos = 20; 
       const lineHeight = 7;
       const margin = 15;
       const imgWidth = 80;
       const imgHeight = 60;
 
-      // Título
       doc.setFontSize(22);
-      doc.setTextColor(30, 70, 40); // Verde oscuro
+      doc.setTextColor(30, 70, 40); 
       doc.text("Reporte de Visita Fitosanitaria", margin, yPos);
       yPos += 10;
-      doc.setDrawColor(166, 227, 75); // Verde claro para la línea
+      doc.setDrawColor(166, 227, 75); 
       doc.line(margin, yPos, doc.internal.pageSize.width - margin, yPos);
       yPos += lineHeight + 5;
 
-      // Información general de la visita
       doc.setFontSize(12);
-      doc.setTextColor(50, 50, 50); // Gris oscuro
+      doc.setTextColor(50, 50, 50); 
       doc.text(`ID Visita: ${visit.id}`, margin, yPos); yPos += lineHeight;
-      doc.text(`Finca: ${producers.find(p => p.id === visit.producerId)?.name || 'N/A'}`, margin, yPos); yPos += lineHeight;
+      
+      const fincaName = fincas.find(f => f.id === visit.fincaId)?.name || 'N/A';
+      doc.text(`Finca: ${fincaName}`, margin, yPos); yPos += lineHeight;
+
       doc.text(`Visitante: ${visit.name}`, margin, yPos); yPos += lineHeight;
       doc.text(`Cédula: ${visit.idNumber}`, margin, yPos); yPos += lineHeight;
       doc.text(`Compañía: ${visit.company}`, margin, yPos); yPos += lineHeight;
@@ -347,7 +350,6 @@ function App() {
       doc.text(`Ingreso Real: ${visit.checkIn ? new Date(visit.checkIn).toLocaleString() : 'N/A'}`, margin, yPos); yPos += lineHeight;
       doc.text(`Salida Real: ${visit.checkOut ? new Date(visit.checkOut).toLocaleString() : 'N/A'}`, margin, yPos); yPos += lineHeight + 10;
 
-      // Sección de Evidencia
       doc.setFontSize(16);
       doc.setTextColor(30, 70, 40);
       doc.text("Evidencia Fotográfica y Firma", margin, yPos);
@@ -355,7 +357,6 @@ function App() {
       doc.line(margin, yPos, doc.internal.pageSize.width - margin, yPos);
       yPos += lineHeight + 5;
 
-      // Añadir Foto Visitante
       if (visit.visitorPhoto) {
         doc.setFontSize(12);
         doc.setTextColor(50, 50, 50);
@@ -370,12 +371,10 @@ function App() {
         yPos += lineHeight + 10;
       }
 
-      // Añadir Foto Vehículo
       if (visit.vehiclePhoto) {
-        // Si no hay espacio, añade una nueva página
         if (yPos + imgHeight + lineHeight > doc.internal.pageSize.height - margin) {
             doc.addPage();
-            yPos = margin + lineHeight; // Reset yPos para nueva página
+            yPos = margin + lineHeight; 
         }
         doc.setFontSize(12);
         doc.setTextColor(50, 50, 50);
@@ -390,18 +389,16 @@ function App() {
         yPos += lineHeight + 10;
       }
 
-      // Añadir Firma
       if (visit.signature) {
-        // Si no hay espacio, añade una nueva página
         if (yPos + imgHeight + lineHeight > doc.internal.pageSize.height - margin) {
             doc.addPage();
-            yPos = margin + lineHeight; // Reset yPos para nueva página
+            yPos = margin + lineHeight; 
         }
         doc.setFontSize(12);
         doc.setTextColor(50, 50, 50);
         doc.text("Firma del Visitante:", margin, yPos);
         yPos += lineHeight;
-        doc.addImage(visit.signature, 'PNG', margin, yPos, imgWidth, imgHeight / 2); // Firma más ancha y menos alta
+        doc.addImage(visit.signature, 'PNG', margin, yPos, imgWidth, imgHeight / 2); 
         yPos += imgHeight / 2 + 10;
       } else {
         doc.setFontSize(12);
@@ -410,7 +407,6 @@ function App() {
         yPos += lineHeight + 10;
       }
 
-      // Guardar el PDF
       doc.save(`Reporte_Visita_${visit.name}_${visit.id}.pdf`);
       showLoadingAndModal('PDF generado con éxito.', 'success');
 
@@ -423,14 +419,15 @@ function App() {
   };
 
 
-  // --- OTRAS FUNCIONES (sin cambios) ---
   const handleAssignAlert = (alertId, comment, diseases, techId, date, priority) => {
     setLoading(true);
     setTimeout(() => {
       let producerId = '';
+      let farmName = '';
       setAlerts(prev => prev.map(a => {
         if (a.id === alertId) {
           producerId = a.producerId;
+          farmName = a.farmName; 
           return { ...a, status: 'assigned', managerComment: comment, possibleDisease: diseases, techId: techId, visitDate: date, priority: priority };
         }
         return a;
@@ -442,13 +439,14 @@ function App() {
       ));
       
       const techName = technicians.find(t => t.id === techId)?.name || 'un técnico';
-      createNotification(producerId, `El Gerente ha asignado la Alerta #${alertId}. ${techName} visitará su finca el ${date}.`, 'producerDashboard');
+      createNotification(producerId, `El Gerente ha asignado la Alerta #${alertId} (${farmName}). ${techName} visitará su finca el ${date}.`, 'producerDashboard');
       
       setLoading(false);
       setModal({ show: true, message: 'Alerta asignada con éxito.', type: 'success' });
       handleNavigate('alertTriage');
     }, 500);
   };
+
   const handleCompleteTask = (taskId) => {
     setLoading(true);
     setTimeout(() => {
@@ -458,21 +456,25 @@ function App() {
       showLoadingAndModal('¡Tarea completada!', 'success');
     }, 500);
   };
+
   const handleMarkAsRead = (notificationId) => {
     setNotifications(prev => prev.map(n =>
       n.id === notificationId ? { ...n, read: true } : n
     ));
   };
+
   const handleSaveInspectionModule = (alertId, partialInspectionData, finalize = false) => {
     setLoading(true);
     setTimeout(() => {
       let producerId = '';
       let techId = '';
+      let farmName = '';
 
       setAlerts(prev => prev.map(a => {
         if (a.id === alertId) {
           producerId = a.producerId;
           techId = a.techId;
+          farmName = a.farmName;
           
           return { 
             ...a, 
@@ -514,9 +516,7 @@ function App() {
         });
         
         setTasks(prev => [...prev, ...newTasks]);
-        
-        createNotification(producerId, `La inspección de la Alerta #${alertId} ha sido completada. Revise los resultados y las ${newTasks.length} nuevas tareas.`, 'producerDashboard');
-
+        createNotification(producerId, `La inspección de la Alerta #${alertId} (${farmName}) ha sido completada. Revise los resultados y las ${newTasks.length} nuevas tareas.`, 'producerDashboard');
         showLoadingAndModal(`Inspección enviada. ${newTasks.length} tareas generadas. Notificando al productor y gerente.`, 'success');
         handleNavigate('technicianSchedule');
       } else {
@@ -534,7 +534,6 @@ function App() {
       return <LoginScreen onLogin={handleLogin} />;
     }
     if (currentPage === 'visitorAccessPage') {
-      // ESTA LÓGICA AHORA FUNCIONA
       const myApprovedVisits = visits.filter(v => v.idNumber === "12345"); 
       return (
         <VisitorAccessPage
@@ -568,8 +567,7 @@ function App() {
           case 'technicianControl':
             return <TechnicianControl technicians={technicians} onNavigate={handleNavigate} />;
           case 'visitorReport':
-            // El reporte de gerente ahora usa *todas* las visitas
-            return <VisitorReport visits={visits} producers={producers} />;
+            return <VisitorReport visits={visits} fincas={fincas} />;
           case 'alertTriage':
             return <AlertTriageView alerts={alerts} technicians={technicians} onAssignAlert={handleAssignAlert} setModal={setModal} />;
           case 'technicianSchedule':
@@ -584,10 +582,20 @@ function App() {
             return <ProducerDashboard producer={currentUser} alerts={alerts} visits={visits} tasks={tasks} technicians={technicians} onNavigate={handleNavigate} />;
           case 'reportAlert':
             return <AlertReportForm producer={currentUser} onSubmitAlert={handleSubmitAlert} setModal={setModal} />;
-          case 'visitorApproval': // Página actualizada
-            return <VisitorApprovalList producer={currentUser} visits={visits} onApproveVisit={handleApproveVisit} onRejectVisit={handleRejectVisit} />;
-          case 'producerVisitorLog': // ¡NUEVA PÁGINA!
-            const producerLog = visits.filter(v => v.producerId === currentUser.id);
+          
+          // --- ¡¡ESTA ES LA RUTA QUE FALLA!! ---
+          // App.js intenta renderizar "ProducerAlertList" aquí.
+          // Si el "import" de la línea 46 falló, la app crashea.
+          case 'producerAlertList': 
+            return <ProducerAlertList producer={currentUser} alerts={alerts} technicians={technicians} onNavigate={handleNavigate} />;
+          
+          case 'visitorApproval': 
+            const myFincaIds = currentUser.fincas.map(f => f.id);
+            const visitsToMe = visits.filter(v => myFincaIds.includes(v.fincaId));
+            return <VisitorApprovalList producer={currentUser} visits={visitsToMe} onApproveVisit={handleApproveVisit} onRejectVisit={handleRejectVisit} />;
+          case 'producerVisitorLog': 
+            const myFincaIdsLog = currentUser.fincas.map(f => f.id);
+            const producerLog = visits.filter(v => myFincaIdsLog.includes(v.fincaId));
             return <ProducerVisitorLog producerLog={producerLog} onGeneratePDF={handleGeneratePDF} />;
           case 'producerTasks':
             return <ProducerTasks producer={currentUser} tasks={tasks} onCompleteTask={handleCompleteTask} onShowTraining={handleShowTraining} />;
@@ -599,6 +607,8 @@ function App() {
               onMarkAsRead={handleMarkAsRead}
               onNavigate={handleNavigate}
             />;
+          case 'producerProfile': 
+            return <ProducerProfile producer={currentUser} />;
           default:
             return <ProducerDashboard producer={currentUser} alerts={alerts} visits={visits} tasks={tasks} technicians={technicians} onNavigate={handleNavigate} />;
         }
