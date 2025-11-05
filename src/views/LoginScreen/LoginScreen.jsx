@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import Icon from '../../components/ui/Icon';
-import { ICONS } from '../../config/icons'; // ¡CORREGIDO! Sin el '_'
-import './LoginScreen.css'; // ¡CORREGIDO! Usando tu archivo .css normal
+import { ICONS } from '../../config/icons';
+import './LoginScreen.css';
 
 /**
- * Pantalla de Login (Versión 2.3 con botones "outline" y "solid")
- * ESTA ES TU VERSIÓN ORIGINAL, CORREGIDA
+ * Pantalla de Login con tu logo Lytiks SVG.
+ * Mantiene la lógica de 2 pasos (Administrativo / Ingreso a Finca).
  */
 const LoginScreen = ({ onLogin }) => {
-  const [selection, setSelection] = useState('main');
+  const [selection, setSelection] = useState('main'); // 'main', 'admin', 'access'
 
+  // Componente interno para el botón de volver
   const BackButton = () => (
     <button className="loginBackButton" onClick={() => setSelection('main')}>
       <Icon path={ICONS.back} size={20} /> Volver
@@ -18,7 +19,7 @@ const LoginScreen = ({ onLogin }) => {
 
   const titles = {
     main: {
-      title: 'Bienvenido de Nuevo',
+      title: 'Bienvenido',
       subtitle: 'Seleccione su tipo de ingreso'
     },
     admin: {
@@ -34,30 +35,36 @@ const LoginScreen = ({ onLogin }) => {
   return (
     <div className="loginContainer">
       <div className="loginBox">
-        <div>
-          <span className="loginLogo">Agro</span>
-          <span className="loginLogoSub">Aliados</span>
+        {/* --- AQUÍ ESTÁ EL CAMBIO CON TU NUEVA URL --- */}
+        <div className="loginLogoContainer">
+          <img
+            src="https://res.cloudinary.com/do4vybtt4/image/upload/v1762369002/Lytiks-02_indfgk.svg"
+            alt="Lytiks Logo"
+            className="loginImageLogo"
+          />
         </div>
+        {/* --- FIN DEL CAMBIO DEL LOGO --- */}
 
         <h1 className="loginTitle">{titles[selection].title}</h1>
         <p className="loginSubtitle">{titles[selection].subtitle}</p>
 
+        {/* Contenedor animado para las vistas */}
         <div className="loginAnimatedContainer">
 
           {/* Vista 1: Principal (main) */}
           <div className={`loginView main-view ${selection === 'main' ? 'visible' : 'hidden'}`}>
             <button
-              className="loginChoiceButton outline-primary" // Estilo "Outline"
+              className="loginChoiceButton outline-primary"
               onClick={() => setSelection('admin')}
             >
               <Icon path={ICONS.dashboard} size={30} />
               <span className="buttonText">Administrativo</span>
             </button>
             <button
-              className="loginChoiceButton solid-primary" // Estilo "Solid" (negativo)
+              className="loginChoiceButton solid-primary"
               onClick={() => setSelection('access')}
             >
-              <Icon path={ICONS.visit} size={30} /> 
+              <Icon path={ICONS.visit} size={30} />
               <span className="buttonText">Ingreso a Finca</span>
             </button>
           </div>
@@ -89,9 +96,8 @@ const LoginScreen = ({ onLogin }) => {
                 <Icon path={ICONS.visit} size={24} />
                 <span className="buttonText">Visitante</span>
               </button>
-              <button 
-                className="loginChoiceButton solid-primary" 
-                // La funcionalidad del botón de portería depende de esta corrección en App.js
+              <button
+                className="loginChoiceButton solid-primary"
                 onClick={() => onLogin('public', 'visitorCheckIn')}
               >
                 <Icon path={ICONS.checkCircle} size={24} />

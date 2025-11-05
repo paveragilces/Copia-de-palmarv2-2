@@ -6,8 +6,7 @@
   min-height: 100vh;
   flex-direction: column;
   background-color: #f7f9fa;
-  /* Fondo de ruido sutil para textura */
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAnElEQVR42u3RMREAAAgEMcC/gQkvMwZIvaZrSg8/gI8gIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi8N0SN/kQP+pGj/AAAAAASUVORK5CYII=);
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAnElEQVR42u3RMREAAAgEMcC/gQkvMwZIvaZrSg8/gI8gIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi8N0SN/kQP+pGaj/AAAAAASUVORK5CYII=);
 }
 
 .loginBox {
@@ -18,23 +17,24 @@
   text-align: center;
   width: 450px;
   max-width: 95%;
-  overflow: hidden; /* Para la animación */
+  overflow: hidden;
 }
 
-.loginLogo {
-  font-size: 42px;
-  font-weight: bold;
-  color: #005a3a;
-  line-height: 1.2;
+/* --- ESTILOS PARA EL CONTENEDOR Y EL LOGO DE IMAGEN (SVG) --- */
+.loginLogoContainer {
+  margin-bottom: 30px; /* Más espacio debajo del logo */
+  margin-top: -10px; /* Ajuste si el SVG tiene espacio extra arriba */
 }
 
-.loginLogoSub {
-  font-size: 42px;
-  font-weight: bold;
-  color: #a6e34b;
-  display: block;
-  margin-bottom: 20px;
+.loginImageLogo {
+  max-width: 250px; /* Ajusta el ancho máximo del logo SVG */
+  height: auto;     /* Mantiene la proporción */
+  display: block;   /* Para centrarlo con margin auto */
+  margin: 0 auto;   /* Centra la imagen horizontalmente */
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.05)); /* Sutil sombra para destacar */
 }
+/* --- FIN DE ESTILOS DE LOGO --- */
+
 
 .loginTitle {
   font-size: 24px;
@@ -54,7 +54,7 @@
 /* --- ESTILOS DE ANIMACIÓN --- */
 .loginAnimatedContainer {
   position: relative;
-  min-height: 150px; /* Altura de los botones grandes */
+  min-height: 150px;
   display: flex;
   flex-direction: column;
 }
@@ -82,9 +82,8 @@
   pointer-events: auto;
 }
 
-/* La primera vista no debe ser 'absolute' */
 .loginView:first-child {
-  position: relative; 
+  position: relative;
 }
 
 /* --- LAYOUTS DE VISTAS --- */
@@ -129,25 +128,18 @@
 
 /* --- NUEVO ESTILO DE BOTÓN "CHOICE" --- */
 .loginChoiceButton {
-  /* Estilo base */
-  border: 2px solid #005a3a; /* Borde verde por defecto */
+  border: 2px solid #005a3a;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-  
-  /* Layout interno (icono arriba, texto abajo) */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
-  /* Tamaño y espacio */
   flex: 1;
   padding: 20px 15px;
   gap: 10px;
-  
   font-size: 16px;
   font-weight: 600;
-  
   width: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -158,33 +150,29 @@
 }
 
 /* --- VARIANTES DE COLOR --- */
-
-/* 1. Estilo "Outline" (Fondo Blanco) */
 .loginChoiceButton.outline-primary {
   background-color: #ffffff;
-  color: #005a3a; /* El icono y el texto heredan este color */
+  color: #005a3a;
 }
 .loginChoiceButton.outline-primary:hover {
-  background-color: #f0f9f5; /* Verde muy pálido */
-  border-color: #004a2f; /* Verde más oscuro */
+  background-color: #f0f9f5;
+  border-color: #004a2f;
   color: #004a2f;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 90, 58, 0.1);
 }
 
-/* 2. Estilo "Solid" (Fondo Verde - Negativo) */
 .loginChoiceButton.solid-primary {
   background-color: #005a3a;
   border-color: #005a3a;
-  color: #ffffff; /* El icono y el texto heredan este color */
+  color: #ffffff;
 }
 .loginChoiceButton.solid-primary:hover {
-  background-color: #004a2f; /* Verde más oscuro */
+  background-color: #004a2f;
   border-color: #004a2f;
   transform: translateY(-2px);
   box-shadow: 0 6px 15px rgba(0, 90, 58, 0.2);
 }
-
 
 /* --- TAMAÑO PARA BOTONES INTERNOS --- */
 .internalButtonRow .loginChoiceButton {
