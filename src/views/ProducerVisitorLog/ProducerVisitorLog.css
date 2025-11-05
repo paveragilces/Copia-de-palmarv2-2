@@ -1,35 +1,69 @@
 /* src/views/ProducerVisitorLog/ProducerVisitorLog.css */
 .producerVisitorLog {
-  /* No usa el .container por defecto, maneja su propio padding */
   padding: 30px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
 .producerVisitorLog .h1 {
   font-size: 28px;
   color: #005a3a;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   border-bottom: 3px solid #a6e34b;
   padding-bottom: 10px;
 }
 
-/* --- FILTROS MEJORADOS --- */
+/* --- CONTENEDOR DE FILTROS --- */
 .filtersContainer {
-  background-color: #FAFAFA; /* ¡COLOR CAMBIADO! */
-  border: 1px solid #e0e0e0;
+  background-color: #FAFAFA;
+  border: 1px solid #eef0f2;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Columnas responsivas */
-  gap: 15px 20px; /* Gap horizontal y vertical */
+  display: flex;
+  flex-direction: column; /* Apila las filas */
+  gap: 0; /* Sin espacio entre filas por defecto */
+}
+
+/* --- ¡AQUÍ ESTÁ EL ARREGLO PRINCIPAL (Layout)! --- */
+.filtersRow {
+  display: grid; 
+  gap: 15px 20px;
   align-items: flex-end; 
 }
 
+/* Fila principal */
+.filtersRow.primary {
+  /* 3 columnas flexibles + 1 columna auto para botones */
+  grid-template-columns: 1fr 1fr 1fr auto; 
+}
+
+/* Fila avanzada (colapsada) */
+.filtersRow.advanced {
+  grid-template-columns: 1fr 1fr 1fr 1fr; /* 4 columnas iguales */
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin-top: 0;
+  padding-top: 0;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-in, margin-top 0.3s ease-out, padding-top 0.3s ease-out;
+}
+
+/* Fila avanzada (expandida) */
+.filtersRow.advanced.expanded {
+  max-height: 200px; /* Altura suficiente */
+  opacity: 1;
+  padding-top: 16px; 
+  margin-top: 16px;
+  border-top: 1px solid #eef0f2;
+}
+
+
+/* Contenedor de un solo filtro (label + input) */
 .filterGroup {
   display: flex;
   flex-direction: column;
+  min-width: 160px; 
 }
 
 .filterGroup label {
@@ -53,7 +87,6 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  /* Altura fija para alinear con el botón de reload */
   height: 40px; 
 }
 .filterInput::placeholder {
@@ -64,7 +97,7 @@
 .filterSelect:focus {
   outline: none;
   border-color: #005a3a;
-  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 90, 58, 0.1);
 }
 
 .filterSelect {
@@ -76,23 +109,56 @@
   cursor: pointer;
 }
 
-/* --- BOTÓN DE LIMPIAR FILTROS (RELOAD) --- */
-.filterGroup.clearButtonContainer {
-  justify-content: flex-end; /* Alinea el botón abajo */
+/* --- Botones de Acción de Filtro --- */
+.filterGroup.actionButtons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  white-space: nowrap; 
+  /* 'margin-left: auto' ya no es necesario con Grid */
 }
-.clearFiltersButton.button.icon {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  color: #777;
-  padding: 0; /* Quitamos padding para controlar con width/height */
-  width: 40px;  /* ¡CAMBIO! Menos ancho */
-  height: 40px; /* ¡CAMBIO! Alineado con inputs */
+
+/* Estilo base para los botones de filtro */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  font-size: 14px;
+  font-weight: 600;
   border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #555;
+  box-shadow: none;
 }
-.clearFiltersButton.button.icon:hover {
-  background-color: #f0f0f0;
+.button:hover {
+  background-color: #f7f9fa;
   border-color: #ccc;
   color: #333;
+}
+
+/* Botón "Filtros Avanzados" (usa la base .button) */
+.button.button-secondary-outline {
+  /* Hereda la mayoría de los estilos de .button */
+}
+
+/* --- ¡AQUÍ ESTÁ EL ARREGLO DEL BOTÓN "X"! --- */
+.clearFiltersButton.button.icon {
+  color: #A0AEC0; /* Gris claro */
+  padding: 0;
+  width: 40px; /* Ancho fijo */
+  border-radius: 50%; /* ¡Redondo! */
+}
+.clearFiltersButton.button.icon:hover {
+  background-color: #fff8f8; /* Fondo rojo suave */
+  border-color: #ffebee;
+  color: #d9534f; /* Rojo */
+  transform: rotate(90deg); /* Efecto de giro sutil */
 }
 
 /* --- ESTILOS DE ESTADO (PÍLDORAS) --- */
@@ -120,46 +186,38 @@
   color: #2196f3;
 }
 .visitStatusTag.checked_out {
-  background-color: #f5f5f5; /* Más sutil */
+  background-color: #f5f5f5;
   color: #666;
 }
 
 /* --- BOTÓN DE PDF (ICONO) --- */
-.producerVisitorLog .button.icon {
+.pdfButton {
   background: none;
   border: none;
-  color: #555; /* ¡CAMBIO! Menos oscuro */
   padding: 5px;
-  box-shadow: none; /* Sin sombra */
-  border-radius: 50%; /* Circular */
-  width: 34px; /* Tamaño fijo */
+  box-shadow: none; 
+  border-radius: 50%; 
+  width: 34px; 
   height: 34px;
+  transition: all 0.2s ease;
+  color: #ccc; /* Deshabilitado por defecto */
 }
-.producerVisitorLog .button.icon:hover:not(:disabled) {
-  color: #005a3a; /* ¡CAMBIO! Verde oscuro en hover */
-  background-color: #f5f5f5; /* ¡CAMBIO! Fondo gris claro */
-  transform: scale(1.1); /* Efecto sutil */
-}
-.producerVisitorLog .button.icon:disabled {
-  color: #ccc;
+.pdfButton:disabled {
   cursor: not-allowed;
-  background: none;
-  transform: none;
 }
 
-/* Botón Outline (usado por "Limpiar Filtros" en .jsx, pero .icon lo sobreescribe) */
-.button.outline {
-  background-color: #fff;
-  border: 1.5px solid #005a3a;
-  color: #005a3a;
-  box-shadow: none;
+/* Habilitado */
+.pdfButton.enabled {
+  color: #005a3a; /* Icono verde */
+  cursor: pointer;
 }
-.button.outline:hover {
-  background-color: #f0f8ed;
-  border-color: #004a2f;
+.pdfButton.enabled:hover {
+  color: #005a3a; 
+  background-color: #f0f9f5; /* Fondo verde claro */
+  transform: scale(1.1); 
 }
 
-/* Botón Icon (base) */
+/* Botón Icon (base) - Usado por el componente Button de /ui */
 .button.icon {
   background: none;
   border: none;
@@ -168,7 +226,7 @@
 }
 .button.icon:hover:not(:disabled) {
   background-color: #f0f0f0;
-  transform: translateY(0); /* Anula el hover general */
+  transform: translateY(0); 
 }
 .button.icon:disabled {
   background: none;

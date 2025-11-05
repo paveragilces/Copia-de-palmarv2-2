@@ -1,3 +1,4 @@
+/* src/views/ProducerCertification/ProducerCertification.css */
 .container {
   background-color: #ffffff;
   padding: 30px;
@@ -14,51 +15,222 @@
   padding-bottom: 10px;
 }
 
-.certificationBox {
-  text-align: center;
-  padding: 30px;
-  border-radius: 10px;
-}
-.certificationBox.success {
-  border: 3px solid #5cb85c;
-  background-color: #f8fff8;
-}
-.certificationBox.warning {
-  border: 3px solid #f0ad4e;
-  background-color: #fffaf5;
+.h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 15px;
+  font-weight: 600;
 }
 
-.certificationTitle {
-  font-size: 22px; /* h2 */
-  font-weight: 600;
-  margin: 0;
+/* --- Header de Certificación --- */
+.certificationHeader {
+  display: flex;
+  align-items: stretch;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  border: 1px solid;
 }
-.certificationTitle.success {
-  color: #5cb85c;
+
+.certificationHeader.certified {
+  background-color: #f0f9f5;
+  border-color: #5cb85c;
 }
-.certificationTitle.warning {
+
+.certificationHeader.pending {
+  background-color: #fffaf5;
+  border-color: #f0ad4e;
+}
+
+.certificationBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+}
+.certificationHeader.certified .certificationBadge {
+  background-color: #5cb85c;
+  color: white;
+}
+.certificationHeader.pending .certificationBadge {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.certificationSummary {
+  flex: 1;
+  padding: 20px 25px;
+}
+
+.summaryTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+.certificationHeader.certified .summaryTitle {
+  color: #005a3a;
+}
+.certificationHeader.pending .summaryTitle {
   color: #f0ad4e;
 }
 
-.certificationScore {
-  font-size: 72px;
-  font-weight: bold;
-  color: #005a3a;
-  margin: 10px 0;
+.certificationSummary p {
+  font-size: 15px;
+  color: #4A5568;
+  margin: 5px 0 0 0;
 }
 
-.certificationText {
-  font-size: 18px;
-  color: #333;
+.certificationScoreBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 20px 30px;
+  border-left: 1px solid #eef0f2;
 }
 
-.certificationTrophy {
-  font-size: 120px;
-  margin: 20px 0;
+.scoreLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
 }
-.trophyLabel {
-  font-size: 24px;
-  font-weight: bold;
+
+.scoreValue {
+  font-size: 36px;
+  font-weight: 700;
   color: #005a3a;
-  display: block;
+  line-height: 1.2;
+}
+
+/* --- Desglose --- */
+.certificationBreakdown {
+  background-color: #fdfdfd;
+  border: 1px solid #eef0f2;
+  padding: 25px;
+  border-radius: 12px;
+}
+.certificationBreakdown .h2 {
+  margin-top: 0;
+  border-bottom: 1px solid #eef0f2;
+}
+.certificationBreakdown p {
+  font-size: 15px;
+  color: #4A5568;
+  margin-top: 0;
+}
+
+.progressGrid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas */
+  gap: 15px 25px;
+}
+
+/* --- ¡NUEVO! Historial de Revisiones --- */
+.certificationHistory {
+  margin-top: 30px;
+}
+.certificationHistory .h2 {
+  border-bottom: 1px solid #eef0f2;
+}
+
+.historyList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.historyItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 8px;
+  padding: 15px 20px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.historyItem:hover {
+  background-color: #f7f9fa;
+  border-color: #005a3a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.historyItem:hover .historyCta {
+  color: #005a3a;
+}
+
+.historyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.historyDate {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2D3748;
+}
+.historyScore {
+  font-size: 14px;
+  color: #4A5568;
+}
+
+.historyActions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.historyCta {
+  font-size: 14px;
+  font-weight: 600;
+  color: #718096;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.2s;
+}
+
+.tag {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.tag-aprobado {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+.tag-no-aprobado {
+  background-color: #ffebee;
+  color: #f44336;
+}
+
+/* --- ¡NUEVO! Contenido del Modal de Historial --- */
+.historyModalContent .h2 {
+  margin-top: 0;
+  color: #005a3a;
+  border: none;
+  padding: 0;
+}
+.historyModalContent .progressGrid {
+  grid-template-columns: 1fr; /* 1 columna dentro del modal */
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .progressGrid {
+    grid-template-columns: 1fr; /* 1 columna */
+  }
+  .certificationHeader {
+    flex-direction: column;
+  }
+  .certificationScoreBox {
+    border-left: none;
+    border-top: 1px solid #eef0f2;
+    align-items: flex-start; /* Alinear a la izquierda en móvil */
+    padding: 15px 25px;
+  }
 }

@@ -2,7 +2,8 @@ import React from 'react';
 import BarChart from '../../components/ui/BarChart';
 import EmptyState from '../../components/ui/EmptyState';
 import { ICONS } from '../../config/icons';
-import { TECHNICIAN_ACTIONS } from '../../data/constants'; // Asumiendo que esto se movió
+// ¡CORREGIDO! Ahora 'TECHNICIAN_ACTIONS' existe en constants.js
+import { TECHNICIAN_ACTIONS } from '../../data/constants'; 
 import './ManagerDashboard.css';
 
 /**
@@ -13,6 +14,8 @@ const ManagerDashboard = ({ alerts, visits, technicians, onNavigate }) => {
   const pendingVisits = visits.filter(v => v.status === 'pending').length;
 
   const completedInspections = alerts.filter(a => a.status === 'completed' && a.inspectionData?.plant);
+  
+  // Esta lógica ahora funcionará
   const actionCounts = TECHNICIAN_ACTIONS.reduce((acc, action) => {
     acc[action] = completedInspections.filter(a =>
       a.inspectionData.plant.data.actions.includes(action)
@@ -46,7 +49,7 @@ const ManagerDashboard = ({ alerts, visits, technicians, onNavigate }) => {
               {visits.filter(v => v.date === new Date().toISOString().split('T')[0]).length}
             </p>
           </div>
-          <div onClick={() => onNavigate('visitorReport')} className="card card-interactive">
+          <div onClick={() => onNavigate('visitorReport', { filter: 'PENDING' })} className="card card-interactive">
             <h2 className="cardTitle">Visitas Pendientes Aprobación</h2>
             <p className="cardNumericValue" style={{ color: pendingVisits > 0 ? '#f0ad4e' : '#5cb85c' }}>
               {pendingVisits}

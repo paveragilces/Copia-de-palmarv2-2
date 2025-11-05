@@ -151,6 +151,7 @@
   padding: 20px;
   background-color: #fdfdfd;
   box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  border-left: 5px solid #5cb85c; /* Borde verde por defecto */
 }
 
 .visitDetails h3 {
@@ -202,5 +203,31 @@
   font-size: 12px;
   color: #555;
   text-align: center;
+  margin-top: 10px;
+}
+
+/* --- ¡ESTILOS NUEVOS AÑADIDOS! --- */
+
+.statusDenied {
+  color: #d9534f; /* Rojo */
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.visitCardDenied {
+  border-left-color: #d9534f;
+  background-color: #fff8f8;
+}
+
+.deniedMessage {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #d9534f;
+  background-color: #ffebee;
+  padding: 10px 15px;
+  border-radius: 8px;
   margin-top: 10px;
 }

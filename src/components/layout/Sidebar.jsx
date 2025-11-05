@@ -5,21 +5,22 @@ import { LYTIKS_LOGO_URL } from '../../data/constants';
 import './Sidebar.css';
 
 /**
- * Barra Lateral (Sidebar)
+ * Barra Lateral (Sidebar) - REDISEÑADO
+ * - Se elimina el botón "Salir" del footer.
+ * - La lógica del botón de navegación se mantiene.
  */
-const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
+const Sidebar = ({ userRole, currentPage, onNavigate }) => {
 
   // --- Sub-componente interno: SidebarButton ---
   const SidebarButton = ({ page, iconPath, label }) => {
     const isSelected = currentPage === page;
     const [hover, setHover] = useState(false);
 
-    // Construye las clases dinámicamente
     const buttonClasses = [
       'sidebarButton',
       isSelected ? 'selected' : '',
       !isSelected && hover ? 'hover' : ''
-    ].filter(Boolean).join(' '); // filter(Boolean) elimina strings vacíos
+    ].filter(Boolean).join(' ');
 
     return (
       <button
@@ -28,19 +29,19 @@ const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <Icon path={iconPath} color={isSelected ? 'white' : '#005a3a'} />
+        <Icon path={iconPath} color={isSelected ? '#005a3a' : '#718096'} />
         {label}
       </button>
     );
   };
   // --- Fin de Sub-componente ---
 
-  // No renderizar nada si no hay rol
   if (!userRole) return null;
 
   return (
     <div className="sidebar">
       <div>
+        {/* Logo ahora sobre fondo blanco */}
         <div className="sidebarLogo">
           <span>Agro</span>
           <span className="sidebarLogoSub">Aliados</span>
@@ -51,13 +52,12 @@ const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
             <>
               <SidebarButton page="producerDashboard" iconPath={ICONS.dashboard} label="Dashboard" />
               <SidebarButton page="reportAlert" iconPath={ICONS.report} label="Reportar Alerta" />
-              {/* --- ¡NUEVO LINK! --- */}
               <SidebarButton page="producerAlertList" iconPath={ICONS.alert} label="Registro de Alertas" />
               <SidebarButton page="visitorApproval" iconPath={ICONS.visit} label="Aprobar Visitas" />
               <SidebarButton page="producerVisitorLog" iconPath={ICONS.audit} label="Registro de Visitas" />
               <SidebarButton page="producerTasks" iconPath={ICONS.tasks} label="Mis Tareas" />
               <SidebarButton page="producerCertification" iconPath={ICONS.certification} label="Certificación" />
-              <SidebarButton page="producerProfile" iconPath={ICONS.technician} label="Mis Fincas" />
+              <SidebarButton page="producerProfile" iconPath={ICONS.user} label="Mis Fincas" />
             </>
           )}
 
@@ -75,6 +75,8 @@ const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
           {userRole === 'technician' && (
             <>
               <SidebarButton page="technicianSchedule" iconPath={ICONS.calendar} label="Mi Agenda" />
+              {/* --- ¡NUEVO LINK! --- */}
+              <SidebarButton page="technicianProfile" iconPath={ICONS.user} label="Mi Perfil" />
             </>
           )}
         </nav>
@@ -82,7 +84,7 @@ const Sidebar = ({ userRole, currentPage, onNavigate, onLogout }) => {
 
       {/* --- Pie de Página del Sidebar --- */}
       <div className="sidebarFooter">
-        <SidebarButton page="logout" iconPath={ICONS.logout} label="Salir" />
+        {/* --- ¡BOTÓN "SALIR" ELIMINADO DE AQUÍ! --- */}
         <div className="footerLogoContainer">
           {LYTIKS_LOGO_URL ? (
             <img src={LYTIKS_LOGO_URL} alt="Lytiks Logo" className="footerLogo" />

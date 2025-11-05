@@ -1,88 +1,101 @@
-/* Estilos para components/layout/Sidebar.jsx */
-
+/* --- ESTILOS DEL SIDEBAR REDISEÑADO --- */
 .sidebar {
-  width: 240px;
+  width: 260px;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.7); /* Vidrio claro */
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); /* Safari */
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
-  z-index: 90;
+  background-color: #FFFFFF; /* Fondo blanco limpio */
+  border-right: 1px solid #eef0f2; /* Borde sutil */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Asegura que el footer se vaya abajo */
+  justify-content: space-between;
+  padding: 20px 0;
   box-sizing: border-box;
+  z-index: 101;
 }
 
 .sidebarLogo {
-  font-size: 24px;
-  font-weight: bold;
-  color: #005a3a;
-  padding: 10px 0 20px 0;
+  font-size: 28px;
+  font-weight: 700;
   text-align: center;
+  padding: 10px 20px 30px 20px;
+  color: #005a3a; /* Color corporativo */
 }
 
 .sidebarLogoSub {
-  color: #a6e34b;
-  display: block;
+  color: #a6e34b; /* Verde lima */
+  font-weight: 500;
 }
 
 .sidebarNav {
-  flex: 1; /* Ocupa el espacio disponible */
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-top: 20px;
+  gap: 2px; /* Espacio entre botones */
 }
 
+/* --- Botones de Navegación (Píldoras) --- */
 .sidebarButton {
-  background-color: transparent;
-  border: none;
-  color: #333;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 12px 15px;
-  border-radius: 8px;
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
+  background: transparent;
+  border: none;
+  padding: 12px 28px; /* Padding ajustado */
+  margin: 2px 16px; /* Margen horizontal para efecto "píldora" */
+  font-size: 15px;
+  font-weight: 500;
   text-align: left;
-  width: 100%;
+  color: #4A5568; /* Gris neutral */
+  border-radius: 8px; /* Bordes redondeados */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
+.sidebarButton svg {
+  color: #718096; /* Iconos en gris más claro */
+  transition: color 0.2s ease-in-out;
+}
+
+/* --- Estado Hover (No seleccionado) --- */
+.sidebarButton:not(.selected):hover {
+  background-color: #f7f9fa; /* Gris de fondo suave */
+  color: #1A202C; /* Texto más oscuro */
+}
+
+.sidebarButton:not(.selected):hover svg {
+  color: #4A5568;
+}
+
+/* --- Estado Seleccionado --- */
 .sidebarButton.selected {
-  background-color: #005a3a;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0, 90, 58, 0.2);
+  background-color: #f0f9f5; /* Tinte verde muy claro */
+  color: #005a3a; /* Color corporativo */
+  font-weight: 600; /* Más grueso */
 }
 
-.sidebarButton.hover {
-  background-color: rgba(0, 0, 0, 0.05);
+.sidebarButton.selected svg {
+  color: #005a3a; /* Icono verde */
 }
 
+
+/* --- Footer --- */
 .sidebarFooter {
-  padding-top: 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0 20px;
+  border-top: 1px solid #eef0f2; /* Separador sutil */
 }
 
 .footerLogoContainer {
+  padding-top: 20px;
   text-align: center;
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid #e0e0e0;
 }
 
 .footerLogo {
-  height: 20px; /* Estilo que estaba inline */
+  height: 25px;
+  opacity: 0.7;
 }
 
 .footerLogoText {
-  font-size: 12px; /* Estilo que estaba inline */
-  color: #aaa;
+  font-size: 13px;
+  color: #718096;
 }

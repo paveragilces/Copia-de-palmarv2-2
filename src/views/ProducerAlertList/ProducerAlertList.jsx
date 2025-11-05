@@ -7,9 +7,11 @@ import './ProducerAlertList.css';
 /**
  * VISTA: Registro de Alertas (Productor)
  * Muestra todas las alertas enviadas por el productor, con filtros de estado.
+ * Acepta pageData para pre-filtrar desde el dashboard.
  */
-const ProducerAlertList = ({ producer, alerts, technicians, onNavigate }) => {
-  const [filterStatus, setFilterStatus] = useState('pending'); // 'pending', 'assigned', 'completed'
+const ProducerAlertList = ({ producer, alerts, technicians, onNavigate, pageData }) => {
+  // USA pageData para el estado inicial, o 'pending' por defecto
+  const [filterStatus, setFilterStatus] = useState(pageData?.filter || 'pending'); 
   
   // Solo alertas de este productor
   const myAlerts = alerts.filter(a => a.producerId === producer.id);
@@ -111,6 +113,4 @@ const ProducerAlertList = ({ producer, alerts, technicians, onNavigate }) => {
   );
 };
 
-// --- ¡¡ESTA LÍNEA ES CRUCIAL!! ---
-// Asegúrate de que tu archivo la tenga.
 export default ProducerAlertList;

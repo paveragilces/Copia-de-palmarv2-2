@@ -4,10 +4,10 @@ import './ProducerDashboard.css';
 
 /**
  * Dashboard del Productor
- * ACTUALIZADO: Con filtro por finca y navegación corregida
+ * ACTUALIZADO: El filtro de finca ahora es un "Control Segmentado" (pills)
  */
 const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNavigate }) => {
-  const [selectedFincaFilter, setSelectedFincaFilter] = useState('all');
+  const [selectedFincaFilter, setSelectedFincaFilter] = useState('all'); // 'all' o un finca.id
 
   // 1. Filtrar datos principales por finca seleccionada
   const myAlerts = alerts.filter(a => a.producerId === producer.id);
@@ -28,42 +28,48 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
   const pendingAlerts = filteredAlerts.filter(a => a.status === 'pending').length;
   const assignedAlerts = filteredAlerts.filter(a => a.status === 'assigned');
   const completedAlerts = filteredAlerts.filter(a => a.status === 'completed' && a.inspectionData?.plant);
-  const pendingVisits = filteredVisits.filter(v => v.status === 'pending').length;
+  const pendingVisits = filteredVisits.filter(v => v.status === 'PENDING').length;
   const pendingTasks = filteredTasks.filter(t => t.status === 'pending').length;
 
 
   const getCountdown = (date) => {
-    if (!date) return null;
+    if (!date) return { text: 'Sin fecha', className: 'urgency-low' };
+    
     const today = new Date(new Date().toISOString().split('T')[0]);
     const visitDate = new Date(new Date(date).toISOString().split('T')[0]);
     const diffTime = visitDate - today;
     const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    if (days < 0) return 'Visita Atrasada';
-    if (days === 0) return 'Visita Hoy';
-    if (days === 1) return 'Visita Mañana';
-    return `Visita en ${days} días`;
+    if (days < 0) return { text: 'Visita Atrasada', className: 'urgency-high' };
+    if (days === 0) return { text: 'Visita Hoy', className: 'urgency-high' };
+    if (days === 1) return { text: 'Visita Mañana', className: 'urgency-medium' };
+    return { text: `Visita en ${days} días`, className: 'urgency-low' };
   };
 
-  // Todo el componente se devuelve dentro de este 'div'
   return (
     <div className="container"> 
       <h1 className="h1">Dashboard: {producer.owner}</h1>
       
-      {/* --- FILTRO DE FINCA --- */}
-      <div className="formGroup" style={{ maxWidth: '400px', marginBottom: '25px' }}>
-        <label className="label" htmlFor="fincaFilter">Filtrar por Finca</label>
-        <select 
-          id="fincaFilter"
-          className="select"
-          value={selectedFincaFilter}
-          onChange={(e) => setSelectedFincaFilter(e.target.value)}
-        >
-          <option value="all">Todas mis Fincas ({producer.fincas.length})</option>
+      {/* --- ¡FILTRO DE FINCA REDISEÑADO! --- */}
+      <div className="fincaFilterContainer">
+        <label className="label">Filtrar por Finca</label>
+        <div className="fincaFilterGroup">
+          <button
+            onClick={() => setSelectedFincaFilter('all')}
+            className={`fincaFilterButton ${selectedFincaFilter === 'all' ? 'active' : ''}`}
+          >
+            Todas mis Fincas
+          </button>
           {producer.fincas.map(finca => (
-            <option key={finca.id} value={finca.id}>{finca.name}</option>
+            <button
+              key={finca.id}
+              onClick={() => setSelectedFincaFilter(finca.id)}
+              className={`fincaFilterButton ${selectedFincaFilter === finca.id ? 'active' : ''}`}
+            >
+              {finca.name}
+            </button>
           ))}
-        </select>
+        </div>
       </div>
       
       {/* --- GRID DE TARJETAS --- */}
@@ -71,8 +77,7 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
         <div 
           className="card card-interactive" 
           style={{ backgroundColor: pendingAlerts > 0 ? '#fff8f8' : '#fff', borderColor: pendingAlerts > 0 ? '#d9534f' : '#f0f0f0' }} 
-          // Navegación corregida al registro de alertas
-          onClick={() => onNavigate('producerAlertList')} 
+          onClick={() => onNavigate('producerAlertList', { filter: 'pending' })} 
         >
           <h2 className="cardTitle">Alertas Pendientes</h2>
           <p className="cardNumericValue" style={{ color: pendingAlerts > 0 ? '#d9534f' : '#5cb85c' }}>{pendingAlerts}</p>
@@ -80,7 +85,7 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
         <div 
           className="card card-interactive" 
           style={{ backgroundColor: pendingTasks > 0 ? '#fffaf5' : '#fff', borderColor: pendingTasks > 0 ? '#f0ad4e' : '#f0f0f0' }} 
-          onClick={() => onNavigate('producerTasks')}
+          onClick={() => onNavigate('producerTasks', { filter: 'pending' })}
         >
           <h2 className="cardTitle">Tareas Pendientes</h2>
           <p className="cardNumericValue" style={{ color: pendingTasks > 0 ? '#f0ad4e' : '#5cb85c' }}>{pendingTasks}</p>
@@ -88,7 +93,7 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
         <div 
           className="card card-interactive" 
           style={{ backgroundColor: pendingVisits > 0 ? '#fffaf5' : '#fff', borderColor: pendingVisits > 0 ? '#f0ad4e' : '#f0f0f0' }} 
-          onClick={() => onNavigate('visitorApproval')}
+          onClick={() => onNavigate('visitorApproval', { filter: 'PENDING' })}
         >
           <h2 className="cardTitle">Visitas por Aprobar</h2>
           <p className="cardNumericValue" style={{ color: pendingVisits > 0 ? '#f0ad4e' : '#5cb85c' }}>{pendingVisits}</p>
@@ -103,23 +108,26 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
       {assignedAlerts.length > 0 && (
         <div style={{ marginTop: '30px' }}>
           <h2 className="h2">Próximas Visitas Técnicas</h2>
-          {assignedAlerts.map(alert => (
-            <div 
-              key={alert.id} 
-              className="listItem" 
-              style={{ borderLeft: `5px solid ${alert.priority === 'Alta' ? '#d9534f' : (alert.priority === 'Media' ? '#f0ad4e' : '#5bc0de')}` }}
-            >
-              <div className="listItemContent" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '5px' }}>
-                <span className="listItemTitle">Alerta #{alert.id} - {alert.farmName} (Lote: {alert.lote})</span>
-                <p>Evaluación Previa: {alert.managerComment || 'Pendiente de comentario'}</p>
-                <p>Técnico: s<strong>{technicians.find(t => t.id === alert.techId)?.name || 'Asignado'}</strong></p>
+          {assignedAlerts.map(alert => {
+            const countdown = getCountdown(alert.visitDate);
+            return (
+              <div 
+                key={alert.id} 
+                className={`listItem ${countdown.className}`}
+                style={{ borderLeft: `5px solid ${alert.priority === 'Alta' ? '#d9534f' : (alert.priority === 'Media' ? '#f0ad4e' : '#5bc0de')}` }}
+              >
+                <div className="listItemContent" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '5px' }}>
+                  <span className="listItemTitle">Alerta #{alert.id} - {alert.farmName} (Lote: {alert.lote})</span>
+                  <p>Evaluación Previa: {alert.managerComment || 'Pendiente de comentario'}</p>
+                  <p>Técnico: <strong>{technicians.find(t => t.id === alert.techId)?.name || 'Asignado'}</strong></p>
+                </div>
+                <div className="listItemActions" style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
+                  <span className={`countdownTimer ${countdown.className}`}>{countdown.text}</span>
+                  <span className="countdownDate">{alert.visitDate}</span>
+                </div>
               </div>
-              <div className="listItemActions" style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                <span className="countdownTimer">{getCountdown(alert.visitDate)}</span>
-                <span className="countdownDate">{alert.visitDate}</span>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -145,7 +153,7 @@ const ProducerDashboard = ({ producer, alerts, visits, tasks, technicians, onNav
           })}
         </div>
       )}
-    </div> // <-- Cierre del 'div' contenedor principal
+    </div> 
   );
 };
 

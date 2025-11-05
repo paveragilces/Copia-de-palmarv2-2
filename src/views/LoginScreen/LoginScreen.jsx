@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import Icon from '../../components/ui/Icon';
-import { ICONS } from '../../config/icons';
-import './LoginScreen.css';
+import { ICONS } from '../../config/icons'; // ¡CORREGIDO! Sin el '_'
+import './LoginScreen.css'; // ¡CORREGIDO! Usando tu archivo .css normal
 
 /**
  * Pantalla de Login (Versión 2.3 con botones "outline" y "solid")
+ * ESTA ES TU VERSIÓN ORIGINAL, CORREGIDA
  */
 const LoginScreen = ({ onLogin }) => {
   const [selection, setSelection] = useState('main');
@@ -56,7 +57,7 @@ const LoginScreen = ({ onLogin }) => {
               className="loginChoiceButton solid-primary" // Estilo "Solid" (negativo)
               onClick={() => setSelection('access')}
             >
-              <Icon path={ICONS.logout} size={30} />
+              <Icon path={ICONS.visit} size={30} /> 
               <span className="buttonText">Ingreso a Finca</span>
             </button>
           </div>
@@ -66,11 +67,11 @@ const LoginScreen = ({ onLogin }) => {
             <BackButton />
             <div className="internalButtonRow">
               <button className="loginChoiceButton outline-primary" onClick={() => onLogin('manager')}>
-                <Icon path={ICONS.certification} size={24} />
+                <Icon path={ICONS.manager} size={24} />
                 <span className="buttonText">Gerente</span>
               </button>
               <button className="loginChoiceButton outline-primary" onClick={() => onLogin('producer')}>
-                <Icon path={ICONS.report} size={24} />
+                <Icon path={ICONS.user} size={24} />
                 <span className="buttonText">Productor</span>
               </button>
               <button className="loginChoiceButton outline-primary" onClick={() => onLogin('technician')}>
@@ -88,7 +89,11 @@ const LoginScreen = ({ onLogin }) => {
                 <Icon path={ICONS.visit} size={24} />
                 <span className="buttonText">Visitante</span>
               </button>
-              <button className="loginChoiceButton solid-primary" onClick={() => onLogin('public', 'visitorCheckIn')}>
+              <button 
+                className="loginChoiceButton solid-primary" 
+                // La funcionalidad del botón de portería depende de esta corrección en App.js
+                onClick={() => onLogin('public', 'visitorCheckIn')}
+              >
                 <Icon path={ICONS.checkCircle} size={24} />
                 <span className="buttonText">Portería</span>
               </button>

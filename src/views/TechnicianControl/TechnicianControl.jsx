@@ -1,46 +1,70 @@
 import React from 'react';
-import EmptyState from '../../components/ui/EmptyState';
-import Avatar from '../../components/ui/Avatar';
+import Icon from '../../components/ui/Icon';
 import { ICONS } from '../../config/icons';
 import './TechnicianControl.css';
 
 /**
- * Control de Técnicos (Gerente, con Avatares)
+ * Vista de Control de Técnicos (Gerente)
+ * ACTUALIZADO: Muestra especialidades y permite registrar nuevos técnicos.
  */
-const TechnicianControl = ({ technicians, onNavigate }) => {
+const TechnicianControl = ({ technicians, onNavigate, onShowRegisterModal }) => {
   return (
     <div className="container">
-      <h1 className="h1">Control de Técnicos</h1>
-      {technicians.length === 0 ? (
-        <EmptyState
-          iconPath={ICONS.technician}
-          title="No hay Técnicos"
-          message="No se han registrado técnicos en el sistema."
-        />
-      ) : (
-        technicians.map(tech => (
-          <div key={tech.id} className="listItem">
-            <div className="listItemContent">
-              <Avatar name={tech.name} />
+      <div className="controlHeader">
+        <h1 className="h1">Control de Técnicos ({technicians.length})</h1>
+        {/* --- ¡NUEVO BOTÓN! --- */}
+        <button
+          className="button btn-primary"
+          onClick={onShowRegisterModal}
+        >
+          <Icon path={ICONS.technician} /> Registrar Nuevo Técnico
+        </button>
+      </div>
+
+      <div className="technicianList">
+        {technicians.map(tech => (
+          <div 
+            key={tech.id} 
+            className="card card-interactive"
+            onClick={() => onNavigate('technicianSchedule', tech)}
+            title={`Clic para ver agenda de ${tech.name}`}
+          >
+            <div className="cardHeader">
+              <span className="techAvatar">
+                <Icon path={ICONS.technician} size={20} />
+              </span>
               <div>
-                <span className="techName">{tech.name}</span>
+                <h2 className="techName">{tech.name}</h2>
                 <span className="techZone">Zona: {tech.zone}</span>
               </div>
             </div>
-            <div className="listItemActions">
-              <span className="techWorkload">
-                Carga: <strong>{tech.workload || 0}</strong> {tech.workload === 1 ? 'asignación' : 'asignaciones'}
-              </span>
-              <button
-                className="button button-secondary"
-                onClick={() => onNavigate('technicianSchedule', tech)}
-              >
-                Ver Agenda
-              </button>
+            
+            <div className="cardBody">
+              <div className="techWorkload">
+                <span className="workloadLabel">Carga de Trabajo</span>
+                <span className="workloadValue">{tech.workload}</span>
+                <span className="workloadLabel">alerta(s) asignada(s)</span>
+              </div>
+              
+              {/* --- ¡NUEVA SECCIÓN DE HABILIDADES! --- */}
+              <div className="specialtySection">
+                <h3 className="specialtyTitle">Especialidades</h3>
+                <div className="specialtyTags">
+                  {tech.specialties?.length > 0 ? (
+                    tech.specialties.map(skill => (
+                      <span key={skill} className="tag tag-skill">
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="tag tag-info">Sin especialidades registradas</span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        ))
-      )}
+        ))}
+      </div>
     </div>
   );
 };

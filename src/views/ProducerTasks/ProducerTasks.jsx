@@ -6,8 +6,13 @@ import './ProducerTasks.css';
 
 /**
  * Tareas Pendientes (Productor, con Modal de Capacitación)
+ * ACTUALIZADO: Acepta pageData para futuros filtros
  */
-const ProducerTasks = ({ producer, tasks, onCompleteTask, onShowTraining }) => {
+const ProducerTasks = ({ producer, tasks, onCompleteTask, onShowTraining, pageData }) => {
+  
+  // NOTA: pageData?.filter está disponible, pero esta vista
+  // no tiene pestañas. Mostraremos pendientes y completadas.
+  
   const pendingTasks = tasks.filter(t => t.producerId === producer.id && t.status === 'pending');
   const completedTasks = tasks.filter(t => t.producerId === producer.id && t.status === 'completed');
 

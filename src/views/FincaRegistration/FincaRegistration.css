@@ -1,0 +1,80 @@
+/* Estilos para el formulario de Registro de Finca */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.loteManager {
+  background-color: #f7f9fa;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 20px 25px;
+}
+
+.loteInputGroup {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+.loteInputGroup .formGroup {
+  flex: 1; /* El input ocupa el espacio */
+  margin-bottom: 0;
+}
+.loteInputGroup .button {
+  height: 46px; /* Alinea con el input */
+  flex-shrink: 0;
+}
+
+.loteTagContainer {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.loteTagContainer p {
+  font-style: italic;
+  color: #718096;
+}
+
+.loteTag {
+  background-color: #e3f2fd;
+  color: #2196f3;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.removeLoteButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  color: #2196f3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.2s, color 0.2s;
+}
+.removeLoteButton:hover {
+  opacity: 1;
+  color: #d9534f;
+}
+
+.formDivider {
+  border: none;
+  border-top: 1px solid #eef0f2;
+  margin: 30px 0;
+}

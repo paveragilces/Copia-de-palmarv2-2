@@ -1,3 +1,4 @@
+/* src/views/LoginScreen/LoginScreen.css */
 .loginContainer {
   display: flex;
   justify-content: center;
@@ -5,6 +6,7 @@
   min-height: 100vh;
   flex-direction: column;
   background-color: #f7f9fa;
+  /* Fondo de ruido sutil para textura */
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAnElEQVR42u3RMREAAAgEMcC/gQkvMwZIvaZrSg8/gI8gIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIi8N0SN/kQP+pGj/AAAAAASUVORK5CYII=);
 }
 
@@ -16,7 +18,7 @@
   text-align: center;
   width: 450px;
   max-width: 95%;
-  overflow: hidden;
+  overflow: hidden; /* Para la animación */
 }
 
 .loginLogo {
@@ -50,10 +52,9 @@
 }
 
 /* --- ESTILOS DE ANIMACIÓN --- */
-
 .loginAnimatedContainer {
   position: relative;
-  min-height: 150px;
+  min-height: 150px; /* Altura de los botones grandes */
   display: flex;
   flex-direction: column;
 }
@@ -81,8 +82,9 @@
   pointer-events: auto;
 }
 
+/* La primera vista no debe ser 'absolute' */
 .loginView:first-child {
-  position: relative;
+  position: relative; 
 }
 
 /* --- LAYOUTS DE VISTAS --- */
@@ -128,7 +130,7 @@
 /* --- NUEVO ESTILO DE BOTÓN "CHOICE" --- */
 .loginChoiceButton {
   /* Estilo base */
-  border: 1.5px solid;
+  border: 2px solid #005a3a; /* Borde verde por defecto */
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
   
@@ -155,16 +157,15 @@
   line-height: 1.2;
 }
 
-/* --- NUEVAS VARIANTES DE COLOR --- */
+/* --- VARIANTES DE COLOR --- */
 
 /* 1. Estilo "Outline" (Fondo Blanco) */
 .loginChoiceButton.outline-primary {
   background-color: #ffffff;
-  border-color: #005a3a;
   color: #005a3a; /* El icono y el texto heredan este color */
 }
 .loginChoiceButton.outline-primary:hover {
-  background-color: #f7fffb; /* Verde muy pálido */
+  background-color: #f0f9f5; /* Verde muy pálido */
   border-color: #004a2f; /* Verde más oscuro */
   color: #004a2f;
   transform: translateY(-2px);
@@ -190,21 +191,4 @@
   padding: 15px 10px;
   font-size: 14px;
   gap: 8px;
-}
-
-
-/* --- Estilos antiguos (ya no se usan en este componente) --- */
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-.button-secondary {
-  background-color: #f0f0f0;
-  color: #444;
-}
-.buttonOutline {
-  width: 100%;
-  justify-content: center;
 }

@@ -59,6 +59,7 @@
   margin-bottom: 10px;
   background-color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .listItemContent {
@@ -86,6 +87,7 @@
   font-size: 18px;
   font-weight: bold;
   color: #005a3a;
+  transition: color 0.3s ease;
 }
 .countdownDate {
   color: #555;
@@ -133,34 +135,75 @@
   color: #fff; 
 }
 
-/* ¡NUEVOS ESTILOS AÑADIDOS! */
-.formGroup {
-  margin-bottom: 20px;
+/* --- Estilos de Urgencia (Próximas Visitas) --- */
+
+/* Urgencia Alta: Hoy o Atrasado */
+.listItem.urgency-high {
+  background-color: #fff8f8;
+  border-color: #d9534f;
+}
+.countdownTimer.urgency-high {
+  color: #d9534f;
+}
+
+/* Urgencia Media: Mañana */
+.listItem.urgency-medium {
+  background-color: #fffaf5;
+  border-color: #f0ad4e;
+}
+.countdownTimer.urgency-medium {
+  color: #f0ad4e;
+}
+
+/* Urgencia Baja: Default */
+.listItem.urgency-low {
+  /* No necesita estilos, usa los .listItem por defecto */
+}
+
+
+/* --- ¡NUEVOS ESTILOS PARA EL FILTRO DE FINCA! --- */
+
+.fincaFilterContainer {
+  margin-bottom: 25px;
 }
 
 .label {
-  margin-bottom: 8px;
-  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+  font-size: 14px;
   font-weight: 600;
-  color: #333;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  color: #555;
 }
 
-.select {
-  width: 100%;
-  padding: 12px 40px 12px 15px;
-  font-size: 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: white;
-  margin-bottom: 15px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23555' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 16px 16px;
+.fincaFilterGroup {
+  display: flex;
+  flex-wrap: wrap; /* Para pantallas pequeñas */
+  gap: 10px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  padding: 5px;
+  max-width: fit-content; /* Se ajusta al contenido */
+}
+
+.fincaFilterButton {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 9px;
+  background-color: transparent; /* Inactivo es transparente */
+  color: #4A5568;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.fincaFilterButton:hover:not(.active) {
+  background-color: #e0e0e0;
+}
+
+.fincaFilterButton.active {
+  background-color: #005a3a; /* Verde corporativo */
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 90, 58, 0.2);
+  transform: scale(1.02);
 }
