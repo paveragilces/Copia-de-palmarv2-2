@@ -1,112 +1,80 @@
-import React, { useState } from 'react';
+// src/views/LoginScreen/LoginScreen.jsx
+import React from 'react';
+import Button from '../../components/ui/Button';
 import Icon from '../../components/ui/Icon';
-import { ICONS } from '../../config/icons';
-import './LoginScreen.css';
+import { ICONS } from '../../config/icons'; 
+import './LoginScreen.css'; 
+
+// Usando los íconos del archivo de configuración
+const { producer, manager, technician, visitor, checkIn, dashboard } = ICONS; 
 
 /**
- * Pantalla de Login con tu logo Lytiks SVG.
- * Mantiene la lógica de 2 pasos (Administrativo / Ingreso a Finca).
+ * Pantalla de Login (Pública) - UI MEJORADA
+ * Mantiene la lógica original de 5 botones.
  */
 const LoginScreen = ({ onLogin }) => {
-  const [selection, setSelection] = useState('main'); // 'main', 'admin', 'access'
-
-  // Componente interno para el botón de volver
-  const BackButton = () => (
-    <button className="loginBackButton" onClick={() => setSelection('main')}>
-      <Icon path={ICONS.back} size={20} /> Volver
-    </button>
-  );
-
-  const titles = {
-    main: {
-      title: 'Bienvenido',
-      subtitle: 'Seleccione su tipo de ingreso'
-    },
-    admin: {
-      title: 'Acceso Administrativo',
-      subtitle: 'Seleccione su rol para continuar'
-    },
-    access: {
-      title: 'Control de Ingreso',
-      subtitle: 'Identifíquese para continuar'
-    }
-  };
-
   return (
     <div className="loginContainer">
       <div className="loginBox">
-        {/* --- AQUÍ ESTÁ EL CAMBIO CON TU NUEVA URL --- */}
-        <div className="loginLogoContainer">
-          <img
-            src="https://res.cloudinary.com/do4vybtt4/image/upload/v1762369002/Lytiks-02_indfgk.svg"
-            alt="Lytiks Logo"
-            className="loginImageLogo"
-          />
+        
+        <div className="loginLogo">
+          <span>Agro</span>
+          <span className="loginLogoSub">Aliados</span>
         </div>
-        {/* --- FIN DEL CAMBIO DEL LOGO --- */}
-
-        <h1 className="loginTitle">{titles[selection].title}</h1>
-        <p className="loginSubtitle">{titles[selection].subtitle}</p>
-
-        {/* Contenedor animado para las vistas */}
-        <div className="loginAnimatedContainer">
-
-          {/* Vista 1: Principal (main) */}
-          <div className={`loginView main-view ${selection === 'main' ? 'visible' : 'hidden'}`}>
-            <button
-              className="loginChoiceButton outline-primary"
-              onClick={() => setSelection('admin')}
-            >
-              <Icon path={ICONS.dashboard} size={30} />
-              <span className="buttonText">Administrativo</span>
-            </button>
-            <button
-              className="loginChoiceButton solid-primary"
-              onClick={() => setSelection('access')}
-            >
-              <Icon path={ICONS.visit} size={30} />
-              <span className="buttonText">Ingreso a Finca</span>
-            </button>
-          </div>
-
-          {/* Vista 2: Administrativo (admin) */}
-          <div className={`loginView internal-view ${selection === 'admin' ? 'visible' : 'hidden'}`}>
-            <BackButton />
-            <div className="internalButtonRow">
-              <button className="loginChoiceButton outline-primary" onClick={() => onLogin('manager')}>
-                <Icon path={ICONS.manager} size={24} />
-                <span className="buttonText">Gerente</span>
-              </button>
-              <button className="loginChoiceButton outline-primary" onClick={() => onLogin('producer')}>
-                <Icon path={ICONS.user} size={24} />
-                <span className="buttonText">Productor</span>
-              </button>
-              <button className="loginChoiceButton outline-primary" onClick={() => onLogin('technician')}>
-                <Icon path={ICONS.technician} size={24} />
-                <span className="buttonText">Técnico</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Vista 3: Ingreso a Finca (access) */}
-          <div className={`loginView internal-view ${selection === 'access' ? 'visible' : 'hidden'}`}>
-            <BackButton />
-            <div className="internalButtonRow">
-              <button className="loginChoiceButton solid-primary" onClick={() => onLogin('public', 'visitorForm')}>
-                <Icon path={ICONS.visit} size={24} />
-                <span className="buttonText">Visitante</span>
-              </button>
-              <button
-                className="loginChoiceButton solid-primary"
-                onClick={() => onLogin('public', 'visitorCheckIn')}
-              >
-                <Icon path={ICONS.checkCircle} size={24} />
-                <span className="buttonText">Portería</span>
-              </button>
-            </div>
-          </div>
-
+        
+        <h1 className="loginTitle">Portal de Acceso</h1>
+        <p className="loginSubtitle">Selecciona tu rol principal para ingresar al sistema.</p>
+        
+        {/* --- GRUPO PRINCIPAL (3 Botones) --- */}
+        <div className="mainButtonGrid">
+          <button 
+            className="roleButton primary-role" 
+            onClick={() => onLogin('producer')} 
+          >
+            {/* --- CAMBIO 1: ÍCONO ESPECÍFICO PARA PRODUCTOR --- */}
+            <Icon path={ICONS.leaf || producer} size="36px" /> 
+            <span className="buttonText">Productor</span>
+          </button>
+          
+          <button 
+            className="roleButton primary-role" 
+            onClick={() => onLogin('manager')} 
+          >
+            <Icon path={dashboard} size="36px" /> 
+            <span className="buttonText">Líder</span> 
+          </button>
+          
+          <button 
+            className="roleButton primary-role" 
+            onClick={() => onLogin('technician')} 
+          >
+            <Icon path={technician} size="36px" />
+            <span className="buttonText">Técnico</span>
+          </button>
         </div>
+
+        <div className="separator">o si eres un visitante</div>
+
+        {/* --- GRUPO SECUNDARIO (2 Botones de Acceso a Finca) --- */}
+        <div className="secondaryButtonRow">
+          {/* --- CAMBIO 2: BOTÓN VISITANTE --- */}
+          <button 
+            className="roleButton secondary-role" 
+            onClick={() => onLogin('public', 'visitorForm')} 
+          >
+            <Icon path={visitor} size="24px" />
+            <span className="buttonText">Portal de Visitantes</span>
+          </button>
+          {/* --- CAMBIO 3: BOTÓN PORTERÍA --- */}
+          <button 
+            className="roleButton secondary-role" 
+            onClick={() => onLogin('public', 'visitorCheckIn')} 
+          >
+            <Icon path={checkIn} size="24px" />
+            <span className="buttonText">Portal de Portería</span>
+          </button>
+        </div>
+
       </div>
     </div>
   );

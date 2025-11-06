@@ -47,6 +47,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px 30px;
+  font-size: 40px;
 }
 .certificationHeader.certified .certificationBadge {
   background-color: #5cb85c;
@@ -58,99 +59,65 @@
 }
 
 .certificationSummary {
-  flex: 1;
   padding: 20px 25px;
+  text-align: left;
 }
-
 .summaryTitle {
   font-size: 20px;
   font-weight: 700;
+  display: block;
+  margin-bottom: 5px;
 }
 .certificationHeader.certified .summaryTitle {
-  color: #005a3a;
+  color: #5cb85c;
 }
 .certificationHeader.pending .summaryTitle {
   color: #f0ad4e;
 }
-
 .certificationSummary p {
   font-size: 15px;
   color: #4A5568;
-  margin: 5px 0 0 0;
+  margin: 0;
+  margin-bottom: 10px;
+  max-width: 600px;
+}
+.summaryScore {
+  font-size: 16px;
+  font-weight: 500;
+  color: #2D3748;
 }
 
-.certificationScoreBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  padding: 20px 30px;
-  border-left: 1px solid #eef0f2;
-}
-
-.scoreLabel {
-  font-size: 14px;
-  font-weight: 600;
-  color: #718096;
-}
-
-.scoreValue {
-  font-size: 36px;
-  font-weight: 700;
-  color: #005a3a;
-  line-height: 1.2;
-}
-
-/* --- Desglose --- */
+/* --- Desglose de Puntajes --- */
 .certificationBreakdown {
-  background-color: #fdfdfd;
-  border: 1px solid #eef0f2;
-  padding: 25px;
-  border-radius: 12px;
+  margin-bottom: 30px;
 }
-.certificationBreakdown .h2 {
-  margin-top: 0;
-  border-bottom: 1px solid #eef0f2;
-}
-.certificationBreakdown p {
-  font-size: 15px;
-  color: #4A5568;
-  margin-top: 0;
-}
-
 .progressGrid {
-  margin-top: 25px;
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 columnas */
-  gap: 15px 25px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 15px;
 }
 
-/* --- ¡NUEVO! Historial de Revisiones --- */
+/* --- Historial de Revisiones --- */
 .certificationHistory {
-  margin-top: 30px;
+  margin-top: 20px;
 }
-.certificationHistory .h2 {
-  border-bottom: 1px solid #eef0f2;
-}
-
 .historyList {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
 .historyItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff;
-  border: 1px solid #eef0f2;
+  padding: 18px 20px;
   border-radius: 8px;
-  padding: 15px 20px;
-  text-align: left;
+  border: 1px solid #e2e8f0;
+  background-color: #fff;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  width: 100%;
+  text-align: left;
 }
 .historyItem:hover {
   background-color: #f7f9fa;
@@ -201,36 +168,9 @@
 }
 .tag-aprobado {
   background-color: #e8f5e9;
-  color: #4caf50;
+  color: #388e3c;
 }
 .tag-no-aprobado {
-  background-color: #ffebee;
-  color: #f44336;
-}
-
-/* --- ¡NUEVO! Contenido del Modal de Historial --- */
-.historyModalContent .h2 {
-  margin-top: 0;
-  color: #005a3a;
-  border: none;
-  padding: 0;
-}
-.historyModalContent .progressGrid {
-  grid-template-columns: 1fr; /* 1 columna dentro del modal */
-}
-
-/* Responsive para pantallas más pequeñas */
-@media (max-width: 768px) {
-  .progressGrid {
-    grid-template-columns: 1fr; /* 1 columna */
-  }
-  .certificationHeader {
-    flex-direction: column;
-  }
-  .certificationScoreBox {
-    border-left: none;
-    border-top: 1px solid #eef0f2;
-    align-items: flex-start; /* Alinear a la izquierda en móvil */
-    padding: 15px 25px;
-  }
+  background-color: #fff8e1;
+  color: #f57c00;
 }

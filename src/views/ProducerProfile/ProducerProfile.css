@@ -1,90 +1,118 @@
-.container {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
-}
+/* src/views/ProducerProfile/ProducerProfile.css */
 
-/* --- ¡NUEVO HEADER! --- */
 .profileHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Para responsiveness */
+  margin-bottom: 25px;
+}
+
+/* --- NUEVA CUADRÍCULA DE FINCAS --- */
+.fincaGrid {
+  display: grid;
+  /* Crea columnas automáticas de 350px, pero que no superen el 100% */
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 20px;
-  margin-bottom: 15px;
-}
-.profileHeader .h1 {
-  margin-bottom: 10px;
-  border: none;
-  padding: 0;
-}
-
-.h2 {
-  font-size: 22px;
-  color: #222;
-  margin-bottom: 15px;
-  font-weight: 600;
-}
-
-.h3 {
-  font-size: 18px;
-  color: #333;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  font-weight: 600;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 15px;
 }
 
 .fincaCard {
-  background-color: #fdfdfd;
-  border: 1px solid #e0e0e0;
+  padding: 20px 25px;
+  background-color: #fff;
   border-radius: 12px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #eef0f2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease-in-out;
 }
 
-.fincaHeader {
+.fincaCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+}
+
+.fincaCardHeader {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
+  gap: 12px;
+  color: var(--color-primary-dark);
+  border-bottom: 1px solid #f0f0f0;
   padding-bottom: 10px;
+  margin-bottom: 15px;
 }
 
-.fincaHeader .h2 {
+.fincaCardHeader .h2 {
+  font-size: 20px;
+  font-weight: 600;
   margin: 0;
-  color: #005a3a;
 }
 
-.fincaHectares {
+.fincaCardInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #4A5568;
+  margin-bottom: 8px;
+}
+
+.fincaCardInfo .icon-svg {
+  color: #718096;
+}
+
+.cardSeparator {
+  border: none;
+  border-top: 1px dashed #e2e8f0;
+  margin: 20px 0;
+}
+
+.fincaCard .h3 {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
-  background-color: #f0f0f0;
-  padding: 5px 10px;
-  border-radius: 8px;
+  color: #2D3748;
+  margin-bottom: 15px;
 }
 
+/* --- LISTA DE LOTES MEJORADA --- */
 .loteList {
-  list-style-type: none;
+  list-style: none;
   padding-left: 0;
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
 }
 
 .loteItem {
-  background-color: #f7f9fa;
-  border: 1px solid #e0e0e0;
-  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb;
+  border: 1px solid #eef0f2;
+  padding: 10px 15px;
   border-radius: 8px;
-  font-size: 15px;
-  color: #333;
-  display: inline-flex;
+}
+
+.loteName {
+  display: flex;
   align-items: center;
   gap: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+.loteArea {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background-color: #f0f9f5;
+  padding: 3px 8px;
+  border-radius: 5px;
+}
+
+.noLotesMessage {
+  font-size: 14px;
+  color: #718096;
+  text-align: center;
+  padding: 10px;
+  background-color: #f9fafb;
+  border-radius: 8px;
 }

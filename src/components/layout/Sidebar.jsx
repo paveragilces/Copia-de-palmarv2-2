@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Icon from '../ui/Icon';
 import { ICONS } from '../../config/icons';
-import { LYTIKS_LOGO_URL } from '../../data/constants';
+// Se elimina la importación de LYTIKS_LOGO_URL que ya no se usa
 import './Sidebar.css';
 
 /**
@@ -82,15 +82,15 @@ const Sidebar = ({ userRole, currentPage, onNavigate }) => {
         </nav>
       </div>
 
-      {/* --- Pie de Página del Sidebar --- */}
+      {/* --- Pie de Página del Sidebar (MODIFICADO) --- */}
       <div className="sidebarFooter">
-        {/* --- ¡BOTÓN "SALIR" ELIMINADO DE AQUÍ! --- */}
         <div className="footerLogoContainer">
-          {LYTIKS_LOGO_URL ? (
-            <img src={LYTIKS_LOGO_URL} alt="Lytiks Logo" className="footerLogo" />
-          ) : (
-            <span className="footerLogoText">Powered by <strong>Lytiks</strong></span>
-          )}
+          {/* --- CAMBIO AQUÍ: Se usa la nueva URL del logo --- */}
+          <img 
+            src="https://res.cloudinary.com/do4vybtt4/image/upload/v1762369002/Lytiks-02_indfgk.svg" 
+            alt="Lytiks Logo" 
+            className="footerLogo" 
+          />
         </div>
       </div>
     </div>
